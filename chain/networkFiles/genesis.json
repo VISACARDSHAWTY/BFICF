@@ -1,0 +1,25 @@
+{
+  "config" : {
+    "chainId" : 20260,
+    "qbft" : {
+      "blockperiodseconds" : 2,
+      "epochlength" : 300,
+      "requesttimeoutseconds" : 10
+    },
+    "homesteadBlock" : 0,
+    "eip150Block" : 0,
+    "eip155Block" : 0,
+    "eip158Block" : 0,
+    "byzantiumBlock" : 0,
+    "constantinopleBlock" : 0,
+    "petersburgBlock" : 0,
+    "istanbulBlock" : 0,
+    "clique" : {
+      "blockperiodseconds" : 15,
+      "epochlength" : 30000
+    }
+  },
+  "difficulty" : "0x1",
+  "gasLimit" : "0x1fffffffffffff",
+  "extraData" : "0xf88fa00000000000000000000000000000000000000000000000000000000000000000f86994a682ac6bc7027c5415b4e0a37703568b1e5255819498a520a0babd605ff5c7bd769e19954d0a5d74d59497d7342dd13346627d3b40190de958cba0c9f60094c2d1efa9c9c56d42d5effd5d809d03c6fb84690e94d1cd718a27630cc30ceba42eb1abe17f30ed59d5c080c0"
+}
