@@ -1,0 +1,30 @@
+{
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\DomainRegistry.sol": {
+    "jobHash": "solc-0_8_38-52dced138223615e09428a770812349aad35e2d9",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\DomainRegistry.sol\\DomainRegistry.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\DomainRegistry.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  },
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\GovernanceParams.sol": {
+    "jobHash": "solc-0_8_38-d05fffa70429f3fe293d7b6f9fb7d9761f378154",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\GovernanceParams.sol\\GovernanceParams.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\GovernanceParams.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  }
+}

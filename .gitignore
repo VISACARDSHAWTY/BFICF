@@ -15,3 +15,5 @@ logs/
 Thumbs.db
 *.md
 docs/
+contracts/test/
+gcm-diagnose.log
