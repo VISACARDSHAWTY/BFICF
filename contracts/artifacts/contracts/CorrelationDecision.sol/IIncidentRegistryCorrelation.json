@@ -1,0 +1,71 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IIncidentRegistryCorrelation",
+  "sourceName": "contracts/CorrelationDecision.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "incidents",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint8",
+          "name": "incidentType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint8",
+          "name": "severity",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "state",
+          "type": "uint8"
+        },
+        {
+          "internalType": "address",
+          "name": "registeredBy",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "markCorrelated",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/CorrelationDecision.sol",
+  "buildInfoId": "solc-0_8_38-de94426957bcdec49ba01419c9092b200dba9695"
+}

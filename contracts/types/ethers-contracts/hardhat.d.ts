@@ -10,25 +10,45 @@ import * as Contracts from "./index.js";
 
 declare module "@nomicfoundation/hardhat-ethers/types" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
-  getContractFactory(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.DomainRegistry__factory>
+  getContractFactory(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.CorrelationDecision__factory>
+getContractFactory(name: 'IIncidentRegistryCorrelation', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryCorrelation__factory>
+getContractFactory(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.DomainRegistry__factory>
 getContractFactory(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.EvidenceCommitment__factory>
 getContractFactory(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GovernanceParams__factory>
 getContractFactory(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IncidentRegistry__factory>
+getContractFactory(name: 'ICorrelationDecisionProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ICorrelationDecisionProposal__factory>
+getContractFactory(name: 'IIncidentRegistryProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryProposal__factory>
+getContractFactory(name: 'ResponseProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ResponseProposal__factory>
 
-  getContractAt(name: 'DomainRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.DomainRegistry>
+  getContractAt(name: 'CorrelationDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.CorrelationDecision>
+getContractAt(name: 'IIncidentRegistryCorrelation', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryCorrelation>
+getContractAt(name: 'DomainRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.DomainRegistry>
 getContractAt(name: 'EvidenceCommitment', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.EvidenceCommitment>
 getContractAt(name: 'GovernanceParams', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GovernanceParams>
 getContractAt(name: 'IncidentRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IncidentRegistry>
+getContractAt(name: 'ICorrelationDecisionProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ICorrelationDecisionProposal>
+getContractAt(name: 'IIncidentRegistryProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryProposal>
+getContractAt(name: 'ResponseProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ResponseProposal>
 
-  deployContract(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
+  deployContract(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
+deployContract(name: 'IIncidentRegistryCorrelation', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryCorrelation>
+deployContract(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
 deployContract(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
 deployContract(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
+deployContract(name: 'ICorrelationDecisionProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICorrelationDecisionProposal>
+deployContract(name: 'IIncidentRegistryProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryProposal>
+deployContract(name: 'ResponseProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseProposal>
 
-  deployContract(name: 'DomainRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
+  deployContract(name: 'CorrelationDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
+deployContract(name: 'IIncidentRegistryCorrelation', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryCorrelation>
+deployContract(name: 'DomainRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
 deployContract(name: 'EvidenceCommitment', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
 deployContract(name: 'GovernanceParams', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'IncidentRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
+deployContract(name: 'ICorrelationDecisionProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICorrelationDecisionProposal>
+deployContract(name: 'IIncidentRegistryProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryProposal>
+deployContract(name: 'ResponseProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseProposal>
 
     // default types
     getContractFactory(

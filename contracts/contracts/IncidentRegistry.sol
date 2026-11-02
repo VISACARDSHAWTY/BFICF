@@ -4,12 +4,7 @@ pragma solidity 0.8.38;
 
 import "./DomainRegistry.sol";
 
-/**
- * @title IncidentRegistry
- * @dev Manages incident registration and enforces the on-chain incident state machine.
- */
 contract IncidentRegistry {
-
     enum IncidentType {
         SOFTWARE,
         HARDWARE,
@@ -40,12 +35,16 @@ contract IncidentRegistry {
 
     DomainRegistry public immutable domainRegistry;
 
+    address public admin;
+    address public correlationDecision;
+    address public responseProposal;
+
     event IncidentRegistered(
         bytes32 indexed incidentId,
-        bytes32 incidentHash,
+        address indexed registeredBy,
         IncidentType incidentType,
         uint8 severity,
-        address registeredBy
+        uint256 timestamp
     );
 
     event IncidentStateUpdated(
@@ -53,6 +52,16 @@ contract IncidentRegistry {
         IncidentState oldState,
         IncidentState newState
     );
+
+    event WorkflowContractsUpdated(
+        address correlationDecision,
+        address responseProposal
+    );
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not admin");
+        _;
+    }
 
     modifier onlyActiveDomain() {
         require(
@@ -62,111 +71,156 @@ contract IncidentRegistry {
         _;
     }
 
-    constructor(address _domainRegistry) {
-        require(_domainRegistry != address(0), "Invalid registry address");
-
-        domainRegistry = DomainRegistry(_domainRegistry);
+    modifier onlyCorrelationDecision() {
+        require(
+            msg.sender == correlationDecision &&
+            correlationDecision != address(0),
+            "Not correlation contract"
+        );
+        _;
     }
 
-    /**
-     * @dev Register an incident. Only active domains can register.
-     */
+    modifier onlyResponseProposal() {
+        require(
+            msg.sender == responseProposal &&
+            responseProposal != address(0),
+            "Not response proposal contract"
+        );
+        _;
+    }
+
+    constructor(address _domainRegistry) {
+        require(
+            _domainRegistry != address(0),
+            "Invalid registry address"
+        );
+
+        domainRegistry = DomainRegistry(_domainRegistry);
+        admin = msg.sender;
+    }
+
+    function setWorkflowContracts(
+        address _correlationDecision,
+        address _responseProposal
+    ) external onlyAdmin {
+        require(
+            _correlationDecision != address(0),
+            "Invalid correlation address"
+        );
+        require(
+            _responseProposal != address(0),
+            "Invalid proposal address"
+        );
+
+        correlationDecision = _correlationDecision;
+        responseProposal = _responseProposal;
+
+        emit WorkflowContractsUpdated(
+            _correlationDecision,
+            _responseProposal
+        );
+    }
+
     function registerIncident(
         bytes32 incidentId,
-        bytes32 incidentHash,
         IncidentType incidentType,
-        uint8 severity
+        uint8 severity,
+        uint256 timestamp
     ) external onlyActiveDomain {
-
+        require(incidentId != bytes32(0), "Invalid incident ID");
+        require(timestamp != 0, "Invalid timestamp");
+        require(severity <= 10, "Invalid severity");
         require(
             incidents[incidentId].timestamp == 0,
             "Incident already registered"
         );
 
-        require(severity <= 10, "Invalid severity");
-
         incidents[incidentId] = Incident({
-            incidentHash: incidentHash,
+            incidentHash: incidentId,
             incidentType: incidentType,
             severity: severity,
-            timestamp: block.timestamp,
+            timestamp: timestamp,
             state: IncidentState.REGISTERED,
             registeredBy: msg.sender
         });
 
         emit IncidentRegistered(
             incidentId,
-            incidentHash,
+            msg.sender,
             incidentType,
             severity,
-            msg.sender
+            timestamp
         );
     }
 
-    /**
-     * @dev Advance incident state following legal transitions.
-     */
+    // Only CorrelationDecision can perform REGISTERED -> CORRELATED.
+    function markCorrelated(
+        bytes32 incidentId
+    ) external onlyCorrelationDecision {
+        Incident storage incident = incidents[incidentId];
+
+        require(incident.timestamp != 0, "Incident not found");
+        require(
+            incident.state == IncidentState.REGISTERED,
+            "Incident not REGISTERED"
+        );
+
+        IncidentState oldState = incident.state;
+        incident.state = IncidentState.CORRELATED;
+
+        emit IncidentStateUpdated(
+            incidentId,
+            oldState,
+            incident.state
+        );
+    }
+
+    // Only ResponseProposal can perform CORRELATED -> RESPONSE_PROPOSED.
+    function markResponseProposed(
+        bytes32 incidentId
+    ) external onlyResponseProposal {
+        Incident storage incident = incidents[incidentId];
+
+        require(incident.timestamp != 0, "Incident not found");
+        require(
+            incident.state == IncidentState.CORRELATED,
+            "Incident not CORRELATED"
+        );
+
+        IncidentState oldState = incident.state;
+        incident.state = IncidentState.RESPONSE_PROPOSED;
+
+        emit IncidentStateUpdated(
+            incidentId,
+            oldState,
+            incident.state
+        );
+    }
+
+    // Remaining lifecycle transitions are kept sequential.
+    // The two transitions above cannot be bypassed manually.
     function advanceState(
         bytes32 incidentId,
         IncidentState newState
     ) external onlyActiveDomain {
+        Incident storage incident = incidents[incidentId];
+
+        require(incident.timestamp != 0, "Incident not found");
+
+        IncidentState oldState = incident.state;
 
         require(
-            incidents[incidentId].timestamp != 0,
-            "Incident not found"
+            uint8(newState) == uint8(oldState) + 1,
+            "Invalid transition"
         );
 
-        IncidentState oldState = incidents[incidentId].state;
+        require(
+            newState != IncidentState.CORRELATED &&
+            newState != IncidentState.RESPONSE_PROPOSED,
+            "Use workflow contract"
+        );
 
-        require(oldState != newState, "Invalid transition");
-
-        if (oldState == IncidentState.REGISTERED) {
-            require(
-                newState == IncidentState.CORRELATED,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.CORRELATED) {
-            require(
-                newState == IncidentState.RESPONSE_PROPOSED,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.RESPONSE_PROPOSED) {
-            require(
-                newState == IncidentState.VOTING,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.VOTING) {
-            require(
-                newState == IncidentState.APPROVED,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.APPROVED) {
-            require(
-                newState == IncidentState.EXECUTING,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.EXECUTING) {
-            require(
-                newState == IncidentState.VERIFIED,
-                "Invalid transition"
-            );
-        } 
-        else if (oldState == IncidentState.VERIFIED) {
-            require(
-                newState == IncidentState.CLOSED,
-                "Invalid transition"
-            );
-        } 
-        else {
-            revert("Invalid transition");
-        }
-
-        incidents[incidentId].state = newState;
+        incident.state = newState;
 
         emit IncidentStateUpdated(
             incidentId,

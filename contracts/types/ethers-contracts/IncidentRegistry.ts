@@ -6,26 +6,38 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IncidentRegistryInterface extends Interface {
-    getFunction(nameOrSignature: "advanceState" | "domainRegistry" | "incidents" | "registerIncident"): FunctionFragment;
+    getFunction(nameOrSignature: "admin" | "advanceState" | "correlationDecision" | "domainRegistry" | "incidents" | "markCorrelated" | "markResponseProposed" | "registerIncident" | "responseProposal" | "setWorkflowContracts"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "IncidentRegistered" | "IncidentStateUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "IncidentRegistered" | "IncidentStateUpdated" | "WorkflowContractsUpdated"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'advanceState', values: [BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
+encodeFunctionData(functionFragment: 'advanceState', values: [BytesLike, BigNumberish]): string;
+encodeFunctionData(functionFragment: 'correlationDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'incidents', values: [BytesLike]): string;
-encodeFunctionData(functionFragment: 'registerIncident', values: [BytesLike, BytesLike, BigNumberish, BigNumberish]): string;
+encodeFunctionData(functionFragment: 'markCorrelated', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'markResponseProposed', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'registerIncident', values: [BytesLike, BigNumberish, BigNumberish, BigNumberish]): string;
+encodeFunctionData(functionFragment: 'responseProposal', values?: undefined): string;
+encodeFunctionData(functionFragment: 'setWorkflowContracts', values: [AddressLike, AddressLike]): string;
 
-    decodeFunctionResult(functionFragment: 'advanceState', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'advanceState', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'correlationDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidents', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'markCorrelated', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'markResponseProposed', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setWorkflowContracts', data: BytesLike): Result;
   }
 
   
     export namespace IncidentRegisteredEvent {
-      export type InputTuple = [incidentId: BytesLike, incidentHash: BytesLike, incidentType: BigNumberish, severity: BigNumberish, registeredBy: AddressLike];
-      export type OutputTuple = [incidentId: string, incidentHash: string, incidentType: bigint, severity: bigint, registeredBy: string];
-      export interface OutputObject {incidentId: string, incidentHash: string, incidentType: bigint, severity: bigint, registeredBy: string }
+      export type InputTuple = [incidentId: BytesLike, registeredBy: AddressLike, incidentType: BigNumberish, severity: BigNumberish, timestamp: BigNumberish];
+      export type OutputTuple = [incidentId: string, registeredBy: string, incidentType: bigint, severity: bigint, timestamp: bigint];
+      export interface OutputObject {incidentId: string, registeredBy: string, incidentType: bigint, severity: bigint, timestamp: bigint }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -38,6 +50,18 @@ decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Res
       export type InputTuple = [incidentId: BytesLike, oldState: BigNumberish, newState: BigNumberish];
       export type OutputTuple = [incidentId: string, oldState: bigint, newState: bigint];
       export interface OutputObject {incidentId: string, oldState: bigint, newState: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace WorkflowContractsUpdatedEvent {
+      export type InputTuple = [correlationDecision: AddressLike, responseProposal: AddressLike];
+      export type OutputTuple = [correlationDecision: string, responseProposal: string];
+      export interface OutputObject {correlationDecision: string, responseProposal: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -80,10 +104,26 @@ decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Res
 
     
     
+    admin: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
     advanceState: TypedContractMethod<
       [incidentId: BytesLike, newState: BigNumberish, ],
       [void],
       'nonpayable'
+    >
+    
+
+    
+    correlationDecision: TypedContractMethod<
+      [],
+      [string],
+      'view'
     >
     
 
@@ -104,8 +144,40 @@ decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Res
     
 
     
+    markCorrelated: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    markResponseProposed: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     registerIncident: TypedContractMethod<
-      [incidentId: BytesLike, incidentHash: BytesLike, incidentType: BigNumberish, severity: BigNumberish, ],
+      [incidentId: BytesLike, incidentType: BigNumberish, severity: BigNumberish, timestamp: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    responseProposal: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
+    setWorkflowContracts: TypedContractMethod<
+      [_correlationDecision: AddressLike, _responseProposal: AddressLike, ],
       [void],
       'nonpayable'
     >
@@ -114,10 +186,20 @@ decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Res
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
+    getFunction(nameOrSignature: 'admin'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
       [incidentId: BytesLike, newState: BigNumberish, ],
       [void],
       'nonpayable'
+    >;
+getFunction(nameOrSignature: 'correlationDecision'): TypedContractMethod<
+      [],
+      [string],
+      'view'
     >;
 getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
       [],
@@ -129,23 +211,48 @@ getFunction(nameOrSignature: 'incidents'): TypedContractMethod<
       [[string, bigint, bigint, bigint, bigint, string] & {incidentHash: string, incidentType: bigint, severity: bigint, timestamp: bigint, state: bigint, registeredBy: string }],
       'view'
     >;
+getFunction(nameOrSignature: 'markCorrelated'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'markResponseProposed'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'registerIncident'): TypedContractMethod<
-      [incidentId: BytesLike, incidentHash: BytesLike, incidentType: BigNumberish, severity: BigNumberish, ],
+      [incidentId: BytesLike, incidentType: BigNumberish, severity: BigNumberish, timestamp: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'responseProposal'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'setWorkflowContracts'): TypedContractMethod<
+      [_correlationDecision: AddressLike, _responseProposal: AddressLike, ],
       [void],
       'nonpayable'
     >;
 
     getEvent(key: 'IncidentRegistered'): TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
 getEvent(key: 'IncidentStateUpdated'): TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
+getEvent(key: 'WorkflowContractsUpdated'): TypedContractEvent<WorkflowContractsUpdatedEvent.InputTuple, WorkflowContractsUpdatedEvent.OutputTuple, WorkflowContractsUpdatedEvent.OutputObject>;
 
     filters: {
       
-      'IncidentRegistered(bytes32,bytes32,uint8,uint8,address)': TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
+      'IncidentRegistered(bytes32,address,uint8,uint8,uint256)': TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
       IncidentRegistered: TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
     
 
       'IncidentStateUpdated(bytes32,uint8,uint8)': TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
       IncidentStateUpdated: TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
+    
+
+      'WorkflowContractsUpdated(address,address)': TypedContractEvent<WorkflowContractsUpdatedEvent.InputTuple, WorkflowContractsUpdatedEvent.OutputTuple, WorkflowContractsUpdatedEvent.OutputObject>;
+      WorkflowContractsUpdated: TypedContractEvent<WorkflowContractsUpdatedEvent.InputTuple, WorkflowContractsUpdatedEvent.OutputTuple, WorkflowContractsUpdatedEvent.OutputObject>;
     
     };
   }

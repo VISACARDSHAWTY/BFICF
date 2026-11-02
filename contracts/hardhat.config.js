@@ -21,6 +21,7 @@ export default defineConfig({
                 enabled: true,
                 runs: 200,
             },
+            viaIR: true,
         },
     },
 
