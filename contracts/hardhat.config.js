@@ -1,6 +1,7 @@
 
 import { defineConfig } from "hardhat/config";
 import hardhatEthers from "@nomicfoundation/hardhat-ethers";
+import hardhatToolboxMochaEthersPlugin from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -11,7 +12,7 @@ const readKey = (name) =>
   "0x" + fs.readFileSync(keyPath(name), "utf8").trim().replace(/^0x/, "");
 
 export default defineConfig({
-  plugins: [hardhatEthers],
+  plugins: [hardhatEthers, hardhatToolboxMochaEthersPlugin],
 
   solidity: {
     version: "0.8.38",

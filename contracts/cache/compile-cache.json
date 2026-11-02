@@ -26,5 +26,33 @@
     "wasm": false,
     "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
     "emitsTypeDeclarations": true
+  },
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\EvidenceCommitment.sol": {
+    "jobHash": "solc-0_8_38-fc09c93b514f7ae032117128fcf99bafece3fec9",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\EvidenceCommitment.sol\\EvidenceCommitment.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-4d41aef3e428badfa3bf869965fe6d43a987ba4a.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-4d41aef3e428badfa3bf869965fe6d43a987ba4a.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\EvidenceCommitment.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  },
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\IncidentRegistry.sol": {
+    "jobHash": "solc-0_8_38-a8bcd892977327322d42fce2939f3cd65f26e7c2",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\IncidentRegistry.sol\\IncidentRegistry.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-4d41aef3e428badfa3bf869965fe6d43a987ba4a.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-4d41aef3e428badfa3bf869965fe6d43a987ba4a.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\IncidentRegistry.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
   }
 }
