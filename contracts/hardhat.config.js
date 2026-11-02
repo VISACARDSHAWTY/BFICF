@@ -1,42 +1,41 @@
 
 import { defineConfig } from "hardhat/config";
-import hardhatEthers from "@nomicfoundation/hardhat-ethers";
 import hardhatToolboxMochaEthersPlugin from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
 import fs from "node:fs";
 import path from "node:path";
 
 const keyPath = (name) =>
-  path.resolve("../chain/nodes", name, "key");
+    path.resolve("../chain/nodes", name, "key");
 
 const readKey = (name) =>
-  "0x" + fs.readFileSync(keyPath(name), "utf8").trim().replace(/^0x/, "");
+    "0x" + fs.readFileSync(keyPath(name), "utf8").trim().replace(/^0x/, "");
 
 export default defineConfig({
-  plugins: [hardhatEthers, hardhatToolboxMochaEthersPlugin],
+    plugins: [hardhatToolboxMochaEthersPlugin],
 
-  solidity: {
-    version: "0.8.38",
-    settings: {
-      evmVersion: "paris",
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
-
-  networks: {
-    local: {
-      type: "http",
-      url: "http://127.0.0.1:8545",
-      accounts: [readKey("secauth"), readKey("oem")],
-      chainId: 20260,
-      gasPrice: "auto",
+    solidity: {
+        version: "0.8.38",
+        settings: {
+            evmVersion: "paris",
+            optimizer: {
+                enabled: true,
+                runs: 200,
+            },
+        },
     },
 
-    hardhat: {
-      type: "edr-simulated",
-      chainId: 20260,
+    networks: {
+        local: {
+            type: "http",
+            url: "http://127.0.0.1:8545",
+            accounts: [readKey("secauth"), readKey("oem")],
+            chainId: 20260,
+            gasPrice: "auto",
+        },
+
+        hardhat: {
+            type: "edr-simulated",
+            chainId: 20260,
+        },
     },
-  },
 });

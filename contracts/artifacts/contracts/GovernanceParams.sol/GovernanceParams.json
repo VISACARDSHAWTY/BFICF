@@ -207,7 +207,7 @@
   "linkReferences": {},
   "deployedLinkReferences": {},
   "immutableReferences": {
-    "766": [
+    "926": [
       {
         "length": 32,
         "start": 185
@@ -231,5 +231,5 @@
     ]
   },
   "inputSourceName": "project/contracts/GovernanceParams.sol",
-  "buildInfoId": "solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda"
+  "buildInfoId": "solc-0_8_38-de634c2a03d81de88c3b0fb514dacea27a99e21e"
 }

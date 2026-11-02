@@ -6,35 +6,19 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IncidentRegistryInterface extends Interface {
-    getFunction(nameOrSignature: "DEFAULT_ADMIN_ROLE" | "DOMAIN_ROLE" | "advanceState" | "domainRegistry" | "getRoleAdmin" | "grantRole" | "hasRole" | "incidents" | "registerIncident" | "renounceRole" | "revokeRole" | "supportsInterface"): FunctionFragment;
+    getFunction(nameOrSignature: "advanceState" | "domainRegistry" | "incidents" | "registerIncident"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "IncidentRegistered" | "IncidentStateUpdated" | "RoleAdminChanged" | "RoleGranted" | "RoleRevoked"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "IncidentRegistered" | "IncidentStateUpdated"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
-encodeFunctionData(functionFragment: 'DOMAIN_ROLE', values?: undefined): string;
-encodeFunctionData(functionFragment: 'advanceState', values: [BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: 'advanceState', values: [BytesLike, BigNumberish]): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
-encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, AddressLike]): string;
-encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'incidents', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'registerIncident', values: [BytesLike, BytesLike, BigNumberish, BigNumberish]): string;
-encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, AddressLike]): string;
-encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, AddressLike]): string;
-encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
 
-    decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'DOMAIN_ROLE', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'advanceState', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'advanceState', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidents', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   }
 
   
@@ -54,42 +38,6 @@ decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Re
       export type InputTuple = [incidentId: BytesLike, oldState: BigNumberish, newState: BigNumberish];
       export type OutputTuple = [incidentId: string, oldState: bigint, newState: bigint];
       export interface OutputObject {incidentId: string, oldState: bigint, newState: bigint }
-      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
-      export type Filter = TypedDeferredTopicFilter<Event>
-      export type Log = TypedEventLog<Event>
-      export type LogDescription = TypedLogDescription<Event>
-    }
-
-  
-
-    export namespace RoleAdminChangedEvent {
-      export type InputTuple = [role: BytesLike, previousAdminRole: BytesLike, newAdminRole: BytesLike];
-      export type OutputTuple = [role: string, previousAdminRole: string, newAdminRole: string];
-      export interface OutputObject {role: string, previousAdminRole: string, newAdminRole: string }
-      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
-      export type Filter = TypedDeferredTopicFilter<Event>
-      export type Log = TypedEventLog<Event>
-      export type LogDescription = TypedLogDescription<Event>
-    }
-
-  
-
-    export namespace RoleGrantedEvent {
-      export type InputTuple = [role: BytesLike, account: AddressLike, sender: AddressLike];
-      export type OutputTuple = [role: string, account: string, sender: string];
-      export interface OutputObject {role: string, account: string, sender: string }
-      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
-      export type Filter = TypedDeferredTopicFilter<Event>
-      export type Log = TypedEventLog<Event>
-      export type LogDescription = TypedLogDescription<Event>
-    }
-
-  
-
-    export namespace RoleRevokedEvent {
-      export type InputTuple = [role: BytesLike, account: AddressLike, sender: AddressLike];
-      export type OutputTuple = [role: string, account: string, sender: string];
-      export interface OutputObject {role: string, account: string, sender: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -132,22 +80,6 @@ decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Re
 
     
     
-    DEFAULT_ADMIN_ROLE: TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >
-    
-
-    
-    DOMAIN_ROLE: TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >
-    
-
-    
     advanceState: TypedContractMethod<
       [incidentId: BytesLike, newState: BigNumberish, ],
       [void],
@@ -159,30 +91,6 @@ decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Re
     domainRegistry: TypedContractMethod<
       [],
       [string],
-      'view'
-    >
-    
-
-    
-    getRoleAdmin: TypedContractMethod<
-      [role: BytesLike, ],
-      [string],
-      'view'
-    >
-    
-
-    
-    grantRole: TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [void],
-      'nonpayable'
-    >
-    
-
-    
-    hasRole: TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [boolean],
       'view'
     >
     
@@ -203,44 +111,10 @@ decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Re
     >
     
 
-    
-    renounceRole: TypedContractMethod<
-      [role: BytesLike, callerConfirmation: AddressLike, ],
-      [void],
-      'nonpayable'
-    >
-    
-
-    
-    revokeRole: TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [void],
-      'nonpayable'
-    >
-    
-
-    
-    supportsInterface: TypedContractMethod<
-      [interfaceId: BytesLike, ],
-      [boolean],
-      'view'
-    >
-    
-
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'DEFAULT_ADMIN_ROLE'): TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'DOMAIN_ROLE'): TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
+    getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
       [incidentId: BytesLike, newState: BigNumberish, ],
       [void],
       'nonpayable'
@@ -248,21 +122,6 @@ getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
 getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
       [],
       [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'getRoleAdmin'): TypedContractMethod<
-      [role: BytesLike, ],
-      [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'grantRole'): TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [void],
-      'nonpayable'
-    >;
-getFunction(nameOrSignature: 'hasRole'): TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [boolean],
       'view'
     >;
 getFunction(nameOrSignature: 'incidents'): TypedContractMethod<
@@ -275,27 +134,9 @@ getFunction(nameOrSignature: 'registerIncident'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
-getFunction(nameOrSignature: 'renounceRole'): TypedContractMethod<
-      [role: BytesLike, callerConfirmation: AddressLike, ],
-      [void],
-      'nonpayable'
-    >;
-getFunction(nameOrSignature: 'revokeRole'): TypedContractMethod<
-      [role: BytesLike, account: AddressLike, ],
-      [void],
-      'nonpayable'
-    >;
-getFunction(nameOrSignature: 'supportsInterface'): TypedContractMethod<
-      [interfaceId: BytesLike, ],
-      [boolean],
-      'view'
-    >;
 
     getEvent(key: 'IncidentRegistered'): TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
 getEvent(key: 'IncidentStateUpdated'): TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
-getEvent(key: 'RoleAdminChanged'): TypedContractEvent<RoleAdminChangedEvent.InputTuple, RoleAdminChangedEvent.OutputTuple, RoleAdminChangedEvent.OutputObject>;
-getEvent(key: 'RoleGranted'): TypedContractEvent<RoleGrantedEvent.InputTuple, RoleGrantedEvent.OutputTuple, RoleGrantedEvent.OutputObject>;
-getEvent(key: 'RoleRevoked'): TypedContractEvent<RoleRevokedEvent.InputTuple, RoleRevokedEvent.OutputTuple, RoleRevokedEvent.OutputObject>;
 
     filters: {
       
@@ -305,18 +146,6 @@ getEvent(key: 'RoleRevoked'): TypedContractEvent<RoleRevokedEvent.InputTuple, Ro
 
       'IncidentStateUpdated(bytes32,uint8,uint8)': TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
       IncidentStateUpdated: TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
-    
-
-      'RoleAdminChanged(bytes32,bytes32,bytes32)': TypedContractEvent<RoleAdminChangedEvent.InputTuple, RoleAdminChangedEvent.OutputTuple, RoleAdminChangedEvent.OutputObject>;
-      RoleAdminChanged: TypedContractEvent<RoleAdminChangedEvent.InputTuple, RoleAdminChangedEvent.OutputTuple, RoleAdminChangedEvent.OutputObject>;
-    
-
-      'RoleGranted(bytes32,address,address)': TypedContractEvent<RoleGrantedEvent.InputTuple, RoleGrantedEvent.OutputTuple, RoleGrantedEvent.OutputObject>;
-      RoleGranted: TypedContractEvent<RoleGrantedEvent.InputTuple, RoleGrantedEvent.OutputTuple, RoleGrantedEvent.OutputObject>;
-    
-
-      'RoleRevoked(bytes32,address,address)': TypedContractEvent<RoleRevokedEvent.InputTuple, RoleRevokedEvent.OutputTuple, RoleRevokedEvent.OutputObject>;
-      RoleRevoked: TypedContractEvent<RoleRevokedEvent.InputTuple, RoleRevokedEvent.OutputTuple, RoleRevokedEvent.OutputObject>;
     
     };
   }

@@ -15,7 +15,7 @@ export interface DomainRegistry$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/DomainRegistry.sol";
-  readonly buildInfoId: "solc-0_8_38-673714fae2c480b4ee320cff73d6fa618b8c6dda";
+  readonly buildInfoId: "solc-0_8_38-de634c2a03d81de88c3b0fb514dacea27a99e21e";
 };
 
 import "hardhat/types/artifacts";

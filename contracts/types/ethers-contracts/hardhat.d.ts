@@ -11,24 +11,24 @@ import * as Contracts from "./index.js";
 declare module "@nomicfoundation/hardhat-ethers/types" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
   getContractFactory(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.DomainRegistry__factory>
-getContractFactory(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IncidentRegistry__factory>
-getContractFactory(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GovernanceParams__factory>
 getContractFactory(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.EvidenceCommitment__factory>
+getContractFactory(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GovernanceParams__factory>
+getContractFactory(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IncidentRegistry__factory>
 
   getContractAt(name: 'DomainRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.DomainRegistry>
-getContractAt(name: 'IncidentRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IncidentRegistry>
-getContractAt(name: 'GovernanceParams', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GovernanceParams>
 getContractAt(name: 'EvidenceCommitment', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.EvidenceCommitment>
+getContractAt(name: 'GovernanceParams', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GovernanceParams>
+getContractAt(name: 'IncidentRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IncidentRegistry>
 
   deployContract(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
-deployContract(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
-deployContract(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
+deployContract(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
+deployContract(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
 
   deployContract(name: 'DomainRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
-deployContract(name: 'IncidentRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
-deployContract(name: 'GovernanceParams', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'EvidenceCommitment', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
+deployContract(name: 'GovernanceParams', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
+deployContract(name: 'IncidentRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
 
     // default types
     getContractFactory(

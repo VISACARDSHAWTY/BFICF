@@ -1,15 +1,14 @@
+
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.38;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./DomainRegistry.sol";
 
 /**
  * @title EvidenceCommitment
- * @dev Stores cryptographic commitments to evidence generated during incident analysis.
+ * @dev Stores cryptographic commitments to incident evidence.
  */
-contract EvidenceCommitment is AccessControl {
-    bytes32 public constant DOMAIN_ROLE = keccak256("DOMAIN_ROLE");
+contract EvidenceCommitment {
 
     struct EvidenceCommitment {
         bytes32 incidentId;
@@ -18,24 +17,55 @@ contract EvidenceCommitment is AccessControl {
         address committedBy;
     }
 
-    // Mapping from evidence hash to commitment data
     mapping(bytes32 => EvidenceCommitment) public commitments;
 
-    // Track which incidents have evidence committed
     mapping(bytes32 => bool) public incidentHasEvidence;
 
-    event EvidenceCommitted(bytes32 indexed incidentId, bytes32 indexed evidenceHash, address committedBy);
-    event EvidenceVerified(bytes32 indexed incidentId, bytes32 indexed evidenceHash, bool valid);
+    DomainRegistry public immutable domainRegistry;
+
+    event EvidenceCommitted(
+        bytes32 indexed incidentId,
+        bytes32 indexed evidenceHash,
+        address committedBy
+    );
+
+    event EvidenceVerified(
+        bytes32 indexed incidentId,
+        bytes32 indexed evidenceHash,
+        bool valid
+    );
+
+    modifier onlyActiveDomain() {
+        require(
+            domainRegistry.isActiveDomain(msg.sender),
+            "Not an active domain"
+        );
+        _;
+    }
 
     constructor(address _domainRegistry) {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        require(_domainRegistry != address(0), "Invalid registry address");
+
+        domainRegistry = DomainRegistry(_domainRegistry);
     }
 
     /**
-     * @dev Commit evidence for an incident. Only active domains can commit.
+     * @dev Commit evidence. Only active domains can commit.
      */
-    function commitEvidence(bytes32 incidentId, bytes32 evidenceHash) external onlyRole(DOMAIN_ROLE) {
-        require(evidenceHash != bytes32(0), "Invalid evidence hash");
+    function commitEvidence(
+        bytes32 incidentId,
+        bytes32 evidenceHash
+    ) external onlyActiveDomain {
+
+        require(
+            evidenceHash != bytes32(0),
+            "Invalid evidence hash"
+        );
+
+        require(
+            commitments[evidenceHash].timestamp == 0,
+            "Evidence already committed"
+        );
 
         commitments[evidenceHash] = EvidenceCommitment({
             incidentId: incidentId,
@@ -46,13 +76,24 @@ contract EvidenceCommitment is AccessControl {
 
         incidentHasEvidence[incidentId] = true;
 
-        emit EvidenceCommitted(incidentId, evidenceHash, msg.sender);
+        emit EvidenceCommitted(
+            incidentId,
+            evidenceHash,
+            msg.sender
+        );
     }
 
     /**
-     * @dev Verify that a claimed evidence hash matches the committed hash.
+     * @dev Verify whether an evidence hash matches an incident.
      */
-    function verifyEvidence(bytes32 incidentId, bytes32 claimedEvidenceHash) external view returns (bool) {
-        return commitments[claimedEvidenceHash].incidentId == incidentId;
+    function verifyEvidence(
+        bytes32 incidentId,
+        bytes32 claimedEvidenceHash
+    ) external view returns (bool) {
+
+        return (
+            commitments[claimedEvidenceHash].timestamp != 0 &&
+            commitments[claimedEvidenceHash].incidentId == incidentId
+        );
     }
 }

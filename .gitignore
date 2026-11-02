@@ -17,4 +17,4 @@ Thumbs.db
 docs/
 contracts/test/
 gcm-diagnose.log
-chain/data
+chain/data/

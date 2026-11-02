@@ -7,6 +7,6 @@ export type { GovernanceParams } from './GovernanceParams.js';
 export type { IncidentRegistry } from './IncidentRegistry.js';
 export * as factories from './factories/index.js';
 export { DomainRegistry__factory } from './factories/DomainRegistry__factory.js';
-export { IncidentRegistry__factory } from './factories/IncidentRegistry__factory.js';
-export { GovernanceParams__factory } from './factories/GovernanceParams__factory.js';
 export { EvidenceCommitment__factory } from './factories/EvidenceCommitment__factory.js';
+export { GovernanceParams__factory } from './factories/GovernanceParams__factory.js';
+export { IncidentRegistry__factory } from './factories/IncidentRegistry__factory.js';
