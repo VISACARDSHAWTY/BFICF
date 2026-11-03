@@ -1,0 +1,40 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IIncidentRegistryVerification",
+  "sourceName": "contracts/ExecutionVerfication.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "closeVerifiedIncident",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "markIncidentVerified",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/ExecutionVerfication.sol",
+  "buildInfoId": "solc-0_8_38-ab724da5fcead4a85f8ccf363bec84922da0c71e"
+}

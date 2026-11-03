@@ -6,44 +6,68 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IncidentRegistryInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "advanceState" | "correlationDecision" | "domainRegistry" | "federatedVoting" | "finalizeIncidentDecision" | "incidents" | "markCorrelated" | "markResponseProposed" | "registerIncident" | "responseDecision" | "responseProposal" | "setGovernanceContracts" | "setWorkflowContracts" | "startVoting"): FunctionFragment;
+    getFunction(nameOrSignature: "admin" | "advanceState" | "closeVerifiedIncident" | "coordinatedResponseExecution" | "correlationDecision" | "domainRegistry" | "executionVerification" | "federatedVoting" | "finalizeIncidentDecision" | "incidents" | "markCorrelated" | "markIncidentVerified" | "markResponseProposed" | "registerIncident" | "responseDecision" | "responseProposal" | "setExecutionContracts" | "setGovernanceContracts" | "setWorkflowContracts" | "startExecution" | "startVoting"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "GovernanceContractsUpdated" | "IncidentRegistered" | "IncidentStateUpdated" | "WorkflowContractsUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ExecutionContractsUpdated" | "GovernanceContractsUpdated" | "IncidentRegistered" | "IncidentStateUpdated" | "WorkflowContractsUpdated"): EventFragment;
 
     encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
 encodeFunctionData(functionFragment: 'advanceState', values: [BytesLike, BigNumberish]): string;
+encodeFunctionData(functionFragment: 'closeVerifiedIncident', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'coordinatedResponseExecution', values?: undefined): string;
 encodeFunctionData(functionFragment: 'correlationDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
+encodeFunctionData(functionFragment: 'executionVerification', values?: undefined): string;
 encodeFunctionData(functionFragment: 'federatedVoting', values?: undefined): string;
 encodeFunctionData(functionFragment: 'finalizeIncidentDecision', values: [BytesLike, boolean]): string;
 encodeFunctionData(functionFragment: 'incidents', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'markCorrelated', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'markIncidentVerified', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'markResponseProposed', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'registerIncident', values: [BytesLike, BigNumberish, BigNumberish, BigNumberish]): string;
 encodeFunctionData(functionFragment: 'responseDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'responseProposal', values?: undefined): string;
+encodeFunctionData(functionFragment: 'setExecutionContracts', values: [AddressLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'setGovernanceContracts', values: [AddressLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'setWorkflowContracts', values: [AddressLike, AddressLike]): string;
+encodeFunctionData(functionFragment: 'startExecution', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'startVoting', values: [BytesLike]): string;
 
     decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'advanceState', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'closeVerifiedIncident', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'coordinatedResponseExecution', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'correlationDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'executionVerification', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'federatedVoting', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'finalizeIncidentDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidents', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'markCorrelated', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'markIncidentVerified', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'markResponseProposed', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'registerIncident', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'responseDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setExecutionContracts', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setGovernanceContracts', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setWorkflowContracts', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'startExecution', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
   }
 
   
+    export namespace ExecutionContractsUpdatedEvent {
+      export type InputTuple = [coordinatedResponseExecution: AddressLike, executionVerification: AddressLike];
+      export type OutputTuple = [coordinatedResponseExecution: string, executionVerification: string];
+      export interface OutputObject {coordinatedResponseExecution: string, executionVerification: string }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
     export namespace GovernanceContractsUpdatedEvent {
       export type InputTuple = [federatedVoting: AddressLike, responseDecision: AddressLike];
       export type OutputTuple = [federatedVoting: string, responseDecision: string];
@@ -142,6 +166,22 @@ decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
     
 
     
+    closeVerifiedIncident: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    coordinatedResponseExecution: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
     correlationDecision: TypedContractMethod<
       [],
       [string],
@@ -151,6 +191,14 @@ decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
 
     
     domainRegistry: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
+    executionVerification: TypedContractMethod<
       [],
       [string],
       'view'
@@ -190,6 +238,14 @@ decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
     
 
     
+    markIncidentVerified: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     markResponseProposed: TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
@@ -222,6 +278,14 @@ decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
     
 
     
+    setExecutionContracts: TypedContractMethod<
+      [_coordinatedResponseExecution: AddressLike, _executionVerification: AddressLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     setGovernanceContracts: TypedContractMethod<
       [_federatedVoting: AddressLike, _responseDecision: AddressLike, ],
       [void],
@@ -232,6 +296,14 @@ decodeFunctionResult(functionFragment: 'startVoting', data: BytesLike): Result;
     
     setWorkflowContracts: TypedContractMethod<
       [_correlationDecision: AddressLike, _responseProposal: AddressLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    startExecution: TypedContractMethod<
+      [incidentId: BytesLike, ],
       [void],
       'nonpayable'
     >
@@ -258,12 +330,27 @@ getFunction(nameOrSignature: 'advanceState'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'closeVerifiedIncident'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'coordinatedResponseExecution'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
 getFunction(nameOrSignature: 'correlationDecision'): TypedContractMethod<
       [],
       [string],
       'view'
     >;
 getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'executionVerification'): TypedContractMethod<
       [],
       [string],
       'view'
@@ -288,6 +375,11 @@ getFunction(nameOrSignature: 'markCorrelated'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'markIncidentVerified'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'markResponseProposed'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
@@ -308,6 +400,11 @@ getFunction(nameOrSignature: 'responseProposal'): TypedContractMethod<
       [string],
       'view'
     >;
+getFunction(nameOrSignature: 'setExecutionContracts'): TypedContractMethod<
+      [_coordinatedResponseExecution: AddressLike, _executionVerification: AddressLike, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'setGovernanceContracts'): TypedContractMethod<
       [_federatedVoting: AddressLike, _responseDecision: AddressLike, ],
       [void],
@@ -318,19 +415,29 @@ getFunction(nameOrSignature: 'setWorkflowContracts'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'startExecution'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'startVoting'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
       'nonpayable'
     >;
 
-    getEvent(key: 'GovernanceContractsUpdated'): TypedContractEvent<GovernanceContractsUpdatedEvent.InputTuple, GovernanceContractsUpdatedEvent.OutputTuple, GovernanceContractsUpdatedEvent.OutputObject>;
+    getEvent(key: 'ExecutionContractsUpdated'): TypedContractEvent<ExecutionContractsUpdatedEvent.InputTuple, ExecutionContractsUpdatedEvent.OutputTuple, ExecutionContractsUpdatedEvent.OutputObject>;
+getEvent(key: 'GovernanceContractsUpdated'): TypedContractEvent<GovernanceContractsUpdatedEvent.InputTuple, GovernanceContractsUpdatedEvent.OutputTuple, GovernanceContractsUpdatedEvent.OutputObject>;
 getEvent(key: 'IncidentRegistered'): TypedContractEvent<IncidentRegisteredEvent.InputTuple, IncidentRegisteredEvent.OutputTuple, IncidentRegisteredEvent.OutputObject>;
 getEvent(key: 'IncidentStateUpdated'): TypedContractEvent<IncidentStateUpdatedEvent.InputTuple, IncidentStateUpdatedEvent.OutputTuple, IncidentStateUpdatedEvent.OutputObject>;
 getEvent(key: 'WorkflowContractsUpdated'): TypedContractEvent<WorkflowContractsUpdatedEvent.InputTuple, WorkflowContractsUpdatedEvent.OutputTuple, WorkflowContractsUpdatedEvent.OutputObject>;
 
     filters: {
       
+      'ExecutionContractsUpdated(address,address)': TypedContractEvent<ExecutionContractsUpdatedEvent.InputTuple, ExecutionContractsUpdatedEvent.OutputTuple, ExecutionContractsUpdatedEvent.OutputObject>;
+      ExecutionContractsUpdated: TypedContractEvent<ExecutionContractsUpdatedEvent.InputTuple, ExecutionContractsUpdatedEvent.OutputTuple, ExecutionContractsUpdatedEvent.OutputObject>;
+    
+
       'GovernanceContractsUpdated(address,address)': TypedContractEvent<GovernanceContractsUpdatedEvent.InputTuple, GovernanceContractsUpdatedEvent.OutputTuple, GovernanceContractsUpdatedEvent.OutputObject>;
       GovernanceContractsUpdated: TypedContractEvent<GovernanceContractsUpdatedEvent.InputTuple, GovernanceContractsUpdatedEvent.OutputTuple, GovernanceContractsUpdatedEvent.OutputObject>;
     

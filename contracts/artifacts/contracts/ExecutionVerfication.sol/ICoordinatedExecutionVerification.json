@@ -1,0 +1,125 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "ICoordinatedExecutionVerification",
+  "sourceName": "contracts/ExecutionVerfication.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "actionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "responsibleDomain",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actionType",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "targetResourceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "detailsHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "receiptHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "reportedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPlanProgress",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incidentId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalActions",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "verifiedActions",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "complete",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "actionId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "successful",
+          "type": "bool"
+        }
+      ],
+      "name": "markActionVerified",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/ExecutionVerfication.sol",
+  "buildInfoId": "solc-0_8_38-ab724da5fcead4a85f8ccf363bec84922da0c71e"
+}

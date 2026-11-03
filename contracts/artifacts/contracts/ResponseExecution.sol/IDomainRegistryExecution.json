@@ -1,0 +1,33 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IDomainRegistryExecution",
+  "sourceName": "contracts/ResponseExecution.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "domain",
+          "type": "address"
+        }
+      ],
+      "name": "isActiveDomain",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/ResponseExecution.sol",
+  "buildInfoId": "solc-0_8_38-ab724da5fcead4a85f8ccf363bec84922da0c71e"
+}

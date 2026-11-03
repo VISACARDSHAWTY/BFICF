@@ -2,8 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as correlationDecisionSol from './CorrelationDecision.sol/index.js';
+export * as executionVerficationSol from './ExecutionVerfication.sol/index.js';
 export * as federatedVotingSol from './FederatedVoting.sol/index.js';
 export * as responseDecisionSol from './ResponseDecision.sol/index.js';
+export * as responseExecutionSol from './ResponseExecution.sol/index.js';
 export * as responseProposalSol from './ResponseProposal.sol/index.js';
 export { DomainRegistry__factory } from './DomainRegistry__factory.js';
 export { EvidenceCommitment__factory } from './EvidenceCommitment__factory.js';
