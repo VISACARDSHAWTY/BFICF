@@ -6,9 +6,9 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface ResponseProposalInterface extends Interface {
-    getFunction(nameOrSignature: "MAX_VOTING_PERIOD" | "MIN_VOTING_PERIOD" | "admin" | "correlationDecision" | "createProposal" | "domainRegistry" | "expireProposal" | "getActions" | "getEligibleVoters" | "incidentRegistry" | "isEligibleVoter" | "isVotingOpen" | "minimumConfidenceClass" | "nextProposalId" | "proposals" | "setMinimumConfidenceClass"): FunctionFragment;
+    getFunction(nameOrSignature: "MAX_VOTING_PERIOD" | "MIN_VOTING_PERIOD" | "admin" | "correlationDecision" | "createProposal" | "domainRegistry" | "expireProposal" | "finalizeProposal" | "getActions" | "getEligibleVoters" | "incidentRegistry" | "isEligibleVoter" | "isVotingOpen" | "minimumConfidenceClass" | "nextProposalId" | "proposals" | "responseDecision" | "setMinimumConfidenceClass" | "setResponseDecision"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "EligibleVoterAdded" | "MinimumConfidenceUpdated" | "ProposalActionAdded" | "ProposalCreated" | "ProposalExpired"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "EligibleVoterAdded" | "MinimumConfidenceUpdated" | "ProposalActionAdded" | "ProposalCreated" | "ProposalExpired" | "ProposalFinalized" | "ResponseDecisionUpdated"): EventFragment;
 
     encodeFunctionData(functionFragment: 'MAX_VOTING_PERIOD', values?: undefined): string;
 encodeFunctionData(functionFragment: 'MIN_VOTING_PERIOD', values?: undefined): string;
@@ -17,6 +17,7 @@ encodeFunctionData(functionFragment: 'correlationDecision', values?: undefined):
 encodeFunctionData(functionFragment: 'createProposal', values: [BytesLike, AddressLike, BytesLike, BigNumberish[], BytesLike, AddressLike[], BigNumberish]): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'expireProposal', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'finalizeProposal', values: [BigNumberish, boolean]): string;
 encodeFunctionData(functionFragment: 'getActions', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'getEligibleVoters', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'incidentRegistry', values?: undefined): string;
@@ -25,7 +26,9 @@ encodeFunctionData(functionFragment: 'isVotingOpen', values: [BigNumberish]): st
 encodeFunctionData(functionFragment: 'minimumConfidenceClass', values?: undefined): string;
 encodeFunctionData(functionFragment: 'nextProposalId', values?: undefined): string;
 encodeFunctionData(functionFragment: 'proposals', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'responseDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'setMinimumConfidenceClass', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'setResponseDecision', values: [AddressLike]): string;
 
     decodeFunctionResult(functionFragment: 'MAX_VOTING_PERIOD', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'MIN_VOTING_PERIOD', data: BytesLike): Result;
@@ -34,6 +37,7 @@ decodeFunctionResult(functionFragment: 'correlationDecision', data: BytesLike): 
 decodeFunctionResult(functionFragment: 'createProposal', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'expireProposal', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'finalizeProposal', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getActions', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getEligibleVoters', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidentRegistry', data: BytesLike): Result;
@@ -42,7 +46,9 @@ decodeFunctionResult(functionFragment: 'isVotingOpen', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'minimumConfidenceClass', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'nextProposalId', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'proposals', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'responseDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setMinimumConfidenceClass', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): Result;
   }
 
   
@@ -98,6 +104,30 @@ decodeFunctionResult(functionFragment: 'setMinimumConfidenceClass', data: BytesL
       export type InputTuple = [proposalId: BigNumberish];
       export type OutputTuple = [proposalId: bigint];
       export interface OutputObject {proposalId: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace ProposalFinalizedEvent {
+      export type InputTuple = [proposalId: BigNumberish, status: BigNumberish];
+      export type OutputTuple = [proposalId: bigint, status: bigint];
+      export interface OutputObject {proposalId: bigint, status: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace ResponseDecisionUpdatedEvent {
+      export type InputTuple = [responseDecision: AddressLike];
+      export type OutputTuple = [responseDecision: string];
+      export interface OutputObject {responseDecision: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -196,6 +226,14 @@ decodeFunctionResult(functionFragment: 'setMinimumConfidenceClass', data: BytesL
     
 
     
+    finalizeProposal: TypedContractMethod<
+      [proposalId: BigNumberish, approved: boolean, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     getActions: TypedContractMethod<
       [proposalId: BigNumberish, ],
       [bigint[]],
@@ -260,8 +298,24 @@ decodeFunctionResult(functionFragment: 'setMinimumConfidenceClass', data: BytesL
     
 
     
+    responseDecision: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
     setMinimumConfidenceClass: TypedContractMethod<
       [newMinimum: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    setResponseDecision: TypedContractMethod<
+      [_responseDecision: AddressLike, ],
       [void],
       'nonpayable'
     >
@@ -305,6 +359,11 @@ getFunction(nameOrSignature: 'expireProposal'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'finalizeProposal'): TypedContractMethod<
+      [proposalId: BigNumberish, approved: boolean, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'getActions'): TypedContractMethod<
       [proposalId: BigNumberish, ],
       [bigint[]],
@@ -345,8 +404,18 @@ getFunction(nameOrSignature: 'proposals'): TypedContractMethod<
       [[string, string, string, string, string, bigint, bigint, bigint] & {incidentId: string, proposer: string, targetDomain: string, targetResourceId: string, detailsHash: string, createdAt: bigint, votingDeadline: bigint, status: bigint }],
       'view'
     >;
+getFunction(nameOrSignature: 'responseDecision'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
 getFunction(nameOrSignature: 'setMinimumConfidenceClass'): TypedContractMethod<
       [newMinimum: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'setResponseDecision'): TypedContractMethod<
+      [_responseDecision: AddressLike, ],
       [void],
       'nonpayable'
     >;
@@ -356,6 +425,8 @@ getEvent(key: 'MinimumConfidenceUpdated'): TypedContractEvent<MinimumConfidenceU
 getEvent(key: 'ProposalActionAdded'): TypedContractEvent<ProposalActionAddedEvent.InputTuple, ProposalActionAddedEvent.OutputTuple, ProposalActionAddedEvent.OutputObject>;
 getEvent(key: 'ProposalCreated'): TypedContractEvent<ProposalCreatedEvent.InputTuple, ProposalCreatedEvent.OutputTuple, ProposalCreatedEvent.OutputObject>;
 getEvent(key: 'ProposalExpired'): TypedContractEvent<ProposalExpiredEvent.InputTuple, ProposalExpiredEvent.OutputTuple, ProposalExpiredEvent.OutputObject>;
+getEvent(key: 'ProposalFinalized'): TypedContractEvent<ProposalFinalizedEvent.InputTuple, ProposalFinalizedEvent.OutputTuple, ProposalFinalizedEvent.OutputObject>;
+getEvent(key: 'ResponseDecisionUpdated'): TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
 
     filters: {
       
@@ -377,6 +448,14 @@ getEvent(key: 'ProposalExpired'): TypedContractEvent<ProposalExpiredEvent.InputT
 
       'ProposalExpired(uint256)': TypedContractEvent<ProposalExpiredEvent.InputTuple, ProposalExpiredEvent.OutputTuple, ProposalExpiredEvent.OutputObject>;
       ProposalExpired: TypedContractEvent<ProposalExpiredEvent.InputTuple, ProposalExpiredEvent.OutputTuple, ProposalExpiredEvent.OutputObject>;
+    
+
+      'ProposalFinalized(uint256,uint8)': TypedContractEvent<ProposalFinalizedEvent.InputTuple, ProposalFinalizedEvent.OutputTuple, ProposalFinalizedEvent.OutputObject>;
+      ProposalFinalized: TypedContractEvent<ProposalFinalizedEvent.InputTuple, ProposalFinalizedEvent.OutputTuple, ProposalFinalizedEvent.OutputObject>;
+    
+
+      'ResponseDecisionUpdated(address)': TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
+      ResponseDecisionUpdated: TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
     
     };
   }

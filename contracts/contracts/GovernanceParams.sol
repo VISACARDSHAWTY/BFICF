@@ -48,7 +48,15 @@ contract GovernanceParams {
         emit ThresholdsUpdated(_quarantine, _revoke, _patch, _quorum);
     }
 
-    function updateWindows(uint256 _commitWin, uint256 _revealWin) external onlySecAuth {
+    function updateWindows(
+        uint256 _commitWin,
+        uint256 _revealWin
+    ) external onlySecAuth {
+        require(
+            _commitWin > 0 && _revealWin > 0,
+            "Invalid voting windows"
+        );
+
         commitWindow = _commitWin;
         revealWindow = _revealWin;
 

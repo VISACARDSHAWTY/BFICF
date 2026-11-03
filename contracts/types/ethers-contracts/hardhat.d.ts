@@ -10,42 +10,78 @@ import * as Contracts from "./index.js";
 
 declare module "@nomicfoundation/hardhat-ethers/types" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
-  getContractFactory(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.CorrelationDecision__factory>
+  getContractFactory(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.DomainRegistry__factory>
+getContractFactory(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.CorrelationDecision__factory>
 getContractFactory(name: 'IIncidentRegistryCorrelation', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryCorrelation__factory>
-getContractFactory(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.DomainRegistry__factory>
 getContractFactory(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.EvidenceCommitment__factory>
+getContractFactory(name: 'FederatedVoting', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.FederatedVoting__factory>
+getContractFactory(name: 'IGovernanceParamsVoting', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IGovernanceParamsVoting__factory>
+getContractFactory(name: 'IIncidentRegistryVoting', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryVoting__factory>
+getContractFactory(name: 'IResponseDecisionVoting', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IResponseDecisionVoting__factory>
+getContractFactory(name: 'IResponseProposalVoting', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IResponseProposalVoting__factory>
 getContractFactory(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GovernanceParams__factory>
 getContractFactory(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IncidentRegistry__factory>
+getContractFactory(name: 'IFederatedVotingDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IFederatedVotingDecision__factory>
+getContractFactory(name: 'IIncidentRegistryDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryDecision__factory>
+getContractFactory(name: 'IResponseProposalDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IResponseProposalDecision__factory>
+getContractFactory(name: 'ResponseDecision', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ResponseDecision__factory>
 getContractFactory(name: 'ICorrelationDecisionProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ICorrelationDecisionProposal__factory>
 getContractFactory(name: 'IIncidentRegistryProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.IIncidentRegistryProposal__factory>
 getContractFactory(name: 'ResponseProposal', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ResponseProposal__factory>
 
-  getContractAt(name: 'CorrelationDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.CorrelationDecision>
+  getContractAt(name: 'DomainRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.DomainRegistry>
+getContractAt(name: 'CorrelationDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.CorrelationDecision>
 getContractAt(name: 'IIncidentRegistryCorrelation', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryCorrelation>
-getContractAt(name: 'DomainRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.DomainRegistry>
 getContractAt(name: 'EvidenceCommitment', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.EvidenceCommitment>
+getContractAt(name: 'FederatedVoting', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.FederatedVoting>
+getContractAt(name: 'IGovernanceParamsVoting', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IGovernanceParamsVoting>
+getContractAt(name: 'IIncidentRegistryVoting', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryVoting>
+getContractAt(name: 'IResponseDecisionVoting', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IResponseDecisionVoting>
+getContractAt(name: 'IResponseProposalVoting', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IResponseProposalVoting>
 getContractAt(name: 'GovernanceParams', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GovernanceParams>
 getContractAt(name: 'IncidentRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IncidentRegistry>
+getContractAt(name: 'IFederatedVotingDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IFederatedVotingDecision>
+getContractAt(name: 'IIncidentRegistryDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryDecision>
+getContractAt(name: 'IResponseProposalDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IResponseProposalDecision>
+getContractAt(name: 'ResponseDecision', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ResponseDecision>
 getContractAt(name: 'ICorrelationDecisionProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ICorrelationDecisionProposal>
 getContractAt(name: 'IIncidentRegistryProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.IIncidentRegistryProposal>
 getContractAt(name: 'ResponseProposal', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ResponseProposal>
 
-  deployContract(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
+  deployContract(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
+deployContract(name: 'CorrelationDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
 deployContract(name: 'IIncidentRegistryCorrelation', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryCorrelation>
-deployContract(name: 'DomainRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
 deployContract(name: 'EvidenceCommitment', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
+deployContract(name: 'FederatedVoting', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.FederatedVoting>
+deployContract(name: 'IGovernanceParamsVoting', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IGovernanceParamsVoting>
+deployContract(name: 'IIncidentRegistryVoting', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryVoting>
+deployContract(name: 'IResponseDecisionVoting', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseDecisionVoting>
+deployContract(name: 'IResponseProposalVoting', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseProposalVoting>
 deployContract(name: 'GovernanceParams', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'IncidentRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
+deployContract(name: 'IFederatedVotingDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IFederatedVotingDecision>
+deployContract(name: 'IIncidentRegistryDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryDecision>
+deployContract(name: 'IResponseProposalDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseProposalDecision>
+deployContract(name: 'ResponseDecision', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseDecision>
 deployContract(name: 'ICorrelationDecisionProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICorrelationDecisionProposal>
 deployContract(name: 'IIncidentRegistryProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryProposal>
 deployContract(name: 'ResponseProposal', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseProposal>
 
-  deployContract(name: 'CorrelationDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
+  deployContract(name: 'DomainRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
+deployContract(name: 'CorrelationDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CorrelationDecision>
 deployContract(name: 'IIncidentRegistryCorrelation', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryCorrelation>
-deployContract(name: 'DomainRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.DomainRegistry>
 deployContract(name: 'EvidenceCommitment', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EvidenceCommitment>
+deployContract(name: 'FederatedVoting', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.FederatedVoting>
+deployContract(name: 'IGovernanceParamsVoting', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IGovernanceParamsVoting>
+deployContract(name: 'IIncidentRegistryVoting', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryVoting>
+deployContract(name: 'IResponseDecisionVoting', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseDecisionVoting>
+deployContract(name: 'IResponseProposalVoting', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseProposalVoting>
 deployContract(name: 'GovernanceParams', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GovernanceParams>
 deployContract(name: 'IncidentRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IncidentRegistry>
+deployContract(name: 'IFederatedVotingDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IFederatedVotingDecision>
+deployContract(name: 'IIncidentRegistryDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryDecision>
+deployContract(name: 'IResponseProposalDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IResponseProposalDecision>
+deployContract(name: 'ResponseDecision', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseDecision>
 deployContract(name: 'ICorrelationDecisionProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICorrelationDecisionProposal>
 deployContract(name: 'IIncidentRegistryProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.IIncidentRegistryProposal>
 deployContract(name: 'ResponseProposal', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ResponseProposal>

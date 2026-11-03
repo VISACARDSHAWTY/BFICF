@@ -43,35 +43,35 @@
     "emitsTypeDeclarations": true
   },
   "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\GovernanceParams.sol": {
-    "jobHash": "solc-0_8_38-7c0911f615afd88dae4fff2f99ad274db26ef3e6",
+    "jobHash": "solc-0_8_38-ca8e987a6c22199333528f277975900940d52f52",
     "isolated": false,
     "compilerType": "solc",
     "artifactPaths": [
       "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\GovernanceParams.sol\\GovernanceParams.json"
     ],
-    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-de94426957bcdec49ba01419c9092b200dba9695.json",
-    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-de94426957bcdec49ba01419c9092b200dba9695.output.json",
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-49618fb44749106b553dc5189c498ebaff26eab2.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-49618fb44749106b553dc5189c498ebaff26eab2.output.json",
     "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\GovernanceParams.sol\\artifacts.d.ts",
     "wasm": false,
     "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
     "emitsTypeDeclarations": true
   },
   "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\IncidentRegistry.sol": {
-    "jobHash": "solc-0_8_38-570ff9413c171d64553abac167d399e35cb411c5",
+    "jobHash": "solc-0_8_38-ef0447f667e712a4b8d2d648af8e3524ba4c4b15",
     "isolated": false,
     "compilerType": "solc",
     "artifactPaths": [
       "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\IncidentRegistry.sol\\IncidentRegistry.json"
     ],
-    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-de94426957bcdec49ba01419c9092b200dba9695.json",
-    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-de94426957bcdec49ba01419c9092b200dba9695.output.json",
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-ef0447f667e712a4b8d2d648af8e3524ba4c4b15.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-ef0447f667e712a4b8d2d648af8e3524ba4c4b15.output.json",
     "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\IncidentRegistry.sol\\artifacts.d.ts",
     "wasm": false,
     "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
     "emitsTypeDeclarations": true
   },
   "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\ResponseProposal.sol": {
-    "jobHash": "solc-0_8_38-3e71ff249ae0d8260cbcd99fe2e38262e3ba3f42",
+    "jobHash": "solc-0_8_38-cfefb3b2d775fe7e2bb16a6aafab634c66fca3da",
     "isolated": false,
     "compilerType": "solc",
     "artifactPaths": [
@@ -79,9 +79,44 @@
       "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseProposal.sol\\IIncidentRegistryProposal.json",
       "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseProposal.sol\\ResponseProposal.json"
     ],
-    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-3e71ff249ae0d8260cbcd99fe2e38262e3ba3f42.json",
-    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-3e71ff249ae0d8260cbcd99fe2e38262e3ba3f42.output.json",
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-cfefb3b2d775fe7e2bb16a6aafab634c66fca3da.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-cfefb3b2d775fe7e2bb16a6aafab634c66fca3da.output.json",
     "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseProposal.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  },
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\FederatedVoting.sol": {
+    "jobHash": "solc-0_8_38-2cd3944ba5f726f88a71065759aca6b5f9069733",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\FederatedVoting.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\IGovernanceParamsVoting.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\IIncidentRegistryVoting.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\IResponseDecisionVoting.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\IResponseProposalVoting.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-49618fb44749106b553dc5189c498ebaff26eab2.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-49618fb44749106b553dc5189c498ebaff26eab2.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\FederatedVoting.sol\\artifacts.d.ts",
+    "wasm": false,
+    "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
+    "emitsTypeDeclarations": true
+  },
+  "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\contracts\\ResponseDecision.sol": {
+    "jobHash": "solc-0_8_38-0251b8ea1687cf00a9ba98e3f473a8d2f2d849be",
+    "isolated": false,
+    "compilerType": "solc",
+    "artifactPaths": [
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseDecision.sol\\IFederatedVotingDecision.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseDecision.sol\\IIncidentRegistryDecision.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseDecision.sol\\IResponseProposalDecision.json",
+      "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseDecision.sol\\ResponseDecision.json"
+    ],
+    "buildInfoPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-0251b8ea1687cf00a9ba98e3f473a8d2f2d849be.json",
+    "buildInfoOutputPath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\build-info\\solc-0_8_38-0251b8ea1687cf00a9ba98e3f473a8d2f2d849be.output.json",
+    "typeFilePath": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts\\contracts\\ResponseDecision.sol\\artifacts.d.ts",
     "wasm": false,
     "artifactsDirectory": "C:\\Users\\MARC\\Desktop\\ts project\\bficf\\contracts\\artifacts",
     "emitsTypeDeclarations": true

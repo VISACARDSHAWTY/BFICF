@@ -78,6 +78,7 @@ contract ResponseProposal {
     uint256 public nextProposalId = 1;
 
     address public admin;
+    address public responseDecision;
 
     uint8 public minimumConfidenceClass;
 
@@ -116,6 +117,13 @@ contract ResponseProposal {
 
     event MinimumConfidenceUpdated(uint8 newMinimum);
 
+    event ResponseDecisionUpdated(address responseDecision);
+
+    event ProposalFinalized(
+        uint256 indexed proposalId,
+        ProposalStatus status
+    );
+
     modifier onlyAdmin() {
         require(msg.sender == admin, "Not admin");
         _;
@@ -125,6 +133,15 @@ contract ResponseProposal {
         require(
             domainRegistry.isActiveDomain(msg.sender),
             "Not an active domain"
+        );
+        _;
+    }
+
+    modifier onlyResponseDecision() {
+        require(
+            msg.sender == responseDecision &&
+            responseDecision != address(0),
+            "Not decision contract"
         );
         _;
     }
@@ -170,6 +187,19 @@ contract ResponseProposal {
         minimumConfidenceClass = newMinimum;
 
         emit MinimumConfidenceUpdated(newMinimum);
+    }
+
+    function setResponseDecision(
+        address _responseDecision
+    ) external onlyAdmin {
+        require(
+            _responseDecision != address(0),
+            "Invalid decision address"
+        );
+
+        responseDecision = _responseDecision;
+
+        emit ResponseDecisionUpdated(_responseDecision);
     }
 
     function createProposal(
@@ -262,6 +292,7 @@ contract ResponseProposal {
                 ),
                 "Voter not affected"
             );
+
             for (uint256 j = 0; j < i; j++) {
                 require(
                     voters[j] != voter,
@@ -354,6 +385,32 @@ contract ResponseProposal {
             proposal.createdAt != 0 &&
             proposal.status == ProposalStatus.PENDING &&
             block.timestamp < proposal.votingDeadline;
+    }
+
+    function finalizeProposal(
+        uint256 proposalId,
+        bool approved
+    ) external onlyResponseDecision {
+        Proposal storage proposal = proposals[proposalId];
+
+        require(
+            proposal.createdAt != 0,
+            "Proposal not found"
+        );
+
+        require(
+            proposal.status == ProposalStatus.PENDING,
+            "Proposal not pending"
+        );
+
+        proposal.status = approved
+            ? ProposalStatus.APPROVED
+            : ProposalStatus.REJECTED;
+
+        emit ProposalFinalized(
+            proposalId,
+            proposal.status
+        );
     }
 
     function expireProposal(uint256 proposalId) external {

@@ -1,0 +1,102 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IFederatedVotingDecision",
+  "sourceName": "contracts/ResponseDecision.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "choice",
+          "type": "uint8"
+        }
+      ],
+      "name": "getVoteCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVotingData",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "started",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "finalized",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "commitEnd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "revealEnd",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "eligibleCount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "revealedCount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "quarantineThreshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "revokeThreshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "patchThreshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "quorumBasisPoints",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/ResponseDecision.sol",
+  "buildInfoId": "solc-0_8_38-0251b8ea1687cf00a9ba98e3f473a8d2f2d849be"
+}
