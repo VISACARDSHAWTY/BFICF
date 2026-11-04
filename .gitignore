@@ -18,3 +18,7 @@ docs/
 contracts/test/
 gcm-diagnose.log
 chain/data/
+chain/nodes/
+domains/*/keys/
+.venv/
+__pycache__/

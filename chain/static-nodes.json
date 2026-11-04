@@ -1,0 +1,8 @@
+[ 
+  "enode://<OEM_PUBLIC_KEY>@localhost:30303",
+  "enode://<CLOUD_PUBLIC_KEY>@localhost:30304",
+  "enode://<EDGE_PUBLIC_KEY>@localhost:30305",
+  "enode://<USER_PUBLIC_KEY>@localhost:30306",
+  "enode://<SEC_AUTH_PUBLIC_KEY>@localhost:30307"
+]
+EOF && echo "Created static-nodes.json for node discovery"

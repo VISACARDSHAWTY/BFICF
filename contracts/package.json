@@ -8,7 +8,7 @@
     "test:coverage": "hardhat coverage",
     "test:step3-1": "hardhat test --grep 'Step3_1'",
     "test:step3-2": "hardhat test --grep 'Step3_2'",
-    "deploy:local": "hardhat run scripts/deploy-local.mjs --network local",
+    "deploy:local": "node scripts/compile.js && node scripts/deploy.js",
     "verify": "npx hardhat verify"
   },
   "devDependencies": {
