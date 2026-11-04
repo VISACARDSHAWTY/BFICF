@@ -1,99 +1,71 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.38;
 
 import "./DomainRegistry.sol";
 
+interface IIncidentRegistryEvidence {
+    function incidentExists(bytes32 incidentId) external view returns (bool);
+}
+
 /**
  * @title EvidenceCommitment
- * @dev Stores cryptographic commitments to incident evidence.
+ * @dev Commitments H_E = Hash(Evidence) to off-chain evidence, scoped PER INCIDENT.
+ *      Keyed by (incidentId, evidenceHash) so nobody can claim a hash under a wrong incident.
+ *      ResponseProposal requires at least one commitment before a response can be proposed.
  */
 contract EvidenceCommitment {
-
-    struct EvidenceCommitment {
-        bytes32 incidentId;
+    struct Commitment {
         bytes32 evidenceHash;
         uint256 timestamp;
         address committedBy;
     }
 
-    mapping(bytes32 => EvidenceCommitment) public commitments;
-
-    mapping(bytes32 => bool) public incidentHasEvidence;
-
     DomainRegistry public immutable domainRegistry;
+    IIncidentRegistryEvidence public immutable incidentRegistry;
 
-    event EvidenceCommitted(
-        bytes32 indexed incidentId,
-        bytes32 indexed evidenceHash,
-        address committedBy
-    );
+    mapping(bytes32 => mapping(bytes32 => Commitment)) public commitments;
+    mapping(bytes32 => uint256) public evidenceCount;
 
-    event EvidenceVerified(
-        bytes32 indexed incidentId,
-        bytes32 indexed evidenceHash,
-        bool valid
-    );
+    event EvidenceCommitted(bytes32 indexed incidentId, bytes32 indexed evidenceHash, address committedBy);
 
     modifier onlyActiveDomain() {
-        require(
-            domainRegistry.isActiveDomain(msg.sender),
-            "Not an active domain"
-        );
+        require(domainRegistry.isActiveDomain(msg.sender), "Not an active domain");
         _;
     }
 
-    constructor(address _domainRegistry) {
+    constructor(address _domainRegistry, address _incidentRegistry) {
         require(_domainRegistry != address(0), "Invalid registry address");
-
+        require(_incidentRegistry != address(0), "Invalid incident registry");
         domainRegistry = DomainRegistry(_domainRegistry);
+        incidentRegistry = IIncidentRegistryEvidence(_incidentRegistry);
     }
 
-    /**
-     * @dev Commit evidence. Only active domains can commit.
-     */
-    function commitEvidence(
-        bytes32 incidentId,
-        bytes32 evidenceHash
-    ) external onlyActiveDomain {
+    function commitEvidence(bytes32 incidentId, bytes32 evidenceHash) external onlyActiveDomain {
+        require(evidenceHash != bytes32(0), "Invalid evidence hash");
+        require(incidentRegistry.incidentExists(incidentId), "Incident not found");
+        require(commitments[incidentId][evidenceHash].timestamp == 0, "Evidence already committed");
 
-        require(
-            evidenceHash != bytes32(0),
-            "Invalid evidence hash"
-        );
-
-        require(
-            commitments[evidenceHash].timestamp == 0,
-            "Evidence already committed"
-        );
-
-        commitments[evidenceHash] = EvidenceCommitment({
-            incidentId: incidentId,
+        commitments[incidentId][evidenceHash] = Commitment({
             evidenceHash: evidenceHash,
             timestamp: block.timestamp,
             committedBy: msg.sender
         });
+        evidenceCount[incidentId]++;
 
-        incidentHasEvidence[incidentId] = true;
-
-        emit EvidenceCommitted(
-            incidentId,
-            evidenceHash,
-            msg.sender
-        );
+        emit EvidenceCommitted(incidentId, evidenceHash, msg.sender);
     }
 
-    /**
-     * @dev Verify whether an evidence hash matches an incident.
-     */
-    function verifyEvidence(
-        bytes32 incidentId,
-        bytes32 claimedEvidenceHash
-    ) external view returns (bool) {
+    function incidentHasEvidence(bytes32 incidentId) external view returns (bool) {
+        return evidenceCount[incidentId] > 0;
+    }
 
-        return (
-            commitments[claimedEvidenceHash].timestamp != 0 &&
-            commitments[claimedEvidenceHash].incidentId == incidentId
-        );
+    /// @dev Is this hash committed for this incident?
+    function verifyEvidence(bytes32 incidentId, bytes32 claimedEvidenceHash) external view returns (bool) {
+        return commitments[incidentId][claimedEvidenceHash].timestamp != 0;
+    }
+
+    /// @dev Check Hash(Evidence) == H_E for raw evidence bytes supplied by an authorised party.
+    function verifyEvidenceData(bytes32 incidentId, bytes calldata evidence) external view returns (bool) {
+        return commitments[incidentId][keccak256(evidence)].timestamp != 0;
     }
 }
