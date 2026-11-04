@@ -6,25 +6,37 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface CorrelationDecisionInterface extends Interface {
-    getFunction(nameOrSignature: "correlations" | "domainRegistry" | "getAffectedDomains" | "hasCorrelation" | "incidentRegistry" | "isAffectedDomain" | "recordCorrelation"): FunctionFragment;
+    getFunction(nameOrSignature: "MAX_AFFECTED" | "attestCorrelation" | "correlations" | "domainRegistry" | "getAffectedDomains" | "getConfidence" | "getPendingAffectedDomains" | "governanceParams" | "hasCorrelation" | "incidentRegistry" | "isAffectedDomain" | "pending" | "submitCorrelation"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "AffectedDomainRecorded" | "CorrelationRecorded"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "AffectedDomainRecorded" | "CorrelationAttested" | "CorrelationRecorded" | "CorrelationSubmitted"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'correlations', values: [BytesLike]): string;
+    encodeFunctionData(functionFragment: 'MAX_AFFECTED', values?: undefined): string;
+encodeFunctionData(functionFragment: 'attestCorrelation', values: [BytesLike, BytesLike]): string;
+encodeFunctionData(functionFragment: 'correlations', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'getAffectedDomains', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'getConfidence', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'getPendingAffectedDomains', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'governanceParams', values?: undefined): string;
 encodeFunctionData(functionFragment: 'hasCorrelation', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'incidentRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'isAffectedDomain', values: [BytesLike, AddressLike]): string;
-encodeFunctionData(functionFragment: 'recordCorrelation', values: [BytesLike, BytesLike, BigNumberish, AddressLike[], BytesLike]): string;
+encodeFunctionData(functionFragment: 'pending', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'submitCorrelation', values: [BytesLike, BytesLike, BigNumberish, AddressLike[], BytesLike]): string;
 
-    decodeFunctionResult(functionFragment: 'correlations', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'MAX_AFFECTED', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'attestCorrelation', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'correlations', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getAffectedDomains', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getConfidence', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getPendingAffectedDomains', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'governanceParams', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'hasCorrelation', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidentRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isAffectedDomain', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'pending', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'submitCorrelation', data: BytesLike): Result;
   }
 
   
@@ -40,10 +52,34 @@ decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Re
 
   
 
+    export namespace CorrelationAttestedEvent {
+      export type InputTuple = [incidentId: BytesLike, domain: AddressLike, round: BigNumberish, attestations: BigNumberish];
+      export type OutputTuple = [incidentId: string, domain: string, round: bigint, attestations: bigint];
+      export interface OutputObject {incidentId: string, domain: string, round: bigint, attestations: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
     export namespace CorrelationRecordedEvent {
       export type InputTuple = [incidentId: BytesLike, resultHash: BytesLike, confidence: BigNumberish, algorithmVersionHash: BytesLike, submittedBy: AddressLike, timestamp: BigNumberish];
       export type OutputTuple = [incidentId: string, resultHash: string, confidence: bigint, algorithmVersionHash: string, submittedBy: string, timestamp: bigint];
       export interface OutputObject {incidentId: string, resultHash: string, confidence: bigint, algorithmVersionHash: string, submittedBy: string, timestamp: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace CorrelationSubmittedEvent {
+      export type InputTuple = [incidentId: BytesLike, resultHash: BytesLike, confidence: BigNumberish, algorithmVersionHash: BytesLike, submittedBy: AddressLike, round: BigNumberish, required: BigNumberish];
+      export type OutputTuple = [incidentId: string, resultHash: string, confidence: bigint, algorithmVersionHash: string, submittedBy: string, round: bigint, required: bigint];
+      export interface OutputObject {incidentId: string, resultHash: string, confidence: bigint, algorithmVersionHash: string, submittedBy: string, round: bigint, required: bigint }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -86,6 +122,22 @@ decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Re
 
     
     
+    MAX_AFFECTED: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    attestCorrelation: TypedContractMethod<
+      [incidentId: BytesLike, resultHash: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     correlations: TypedContractMethod<
       [arg0: BytesLike, ],
       [[string, string, bigint, bigint, string, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, timestamp: bigint, submittedBy: string, exists: boolean }],
@@ -105,6 +157,30 @@ decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Re
     getAffectedDomains: TypedContractMethod<
       [incidentId: BytesLike, ],
       [string[]],
+      'view'
+    >
+    
+
+    
+    getConfidence: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    getPendingAffectedDomains: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [string[]],
+      'view'
+    >
+    
+
+    
+    governanceParams: TypedContractMethod<
+      [],
+      [string],
       'view'
     >
     
@@ -134,7 +210,15 @@ decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Re
     
 
     
-    recordCorrelation: TypedContractMethod<
+    pending: TypedContractMethod<
+      [arg0: BytesLike, ],
+      [[string, string, bigint, string, bigint, bigint, bigint, bigint, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, submittedBy: string, submittedAt: bigint, round: bigint, attestations: bigint, required: bigint, active: boolean }],
+      'view'
+    >
+    
+
+    
+    submitCorrelation: TypedContractMethod<
       [incidentId: BytesLike, resultHash: BytesLike, confidence: BigNumberish, _affectedDomains: AddressLike[], algorithmVersionHash: BytesLike, ],
       [void],
       'nonpayable'
@@ -144,7 +228,17 @@ decodeFunctionResult(functionFragment: 'recordCorrelation', data: BytesLike): Re
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'correlations'): TypedContractMethod<
+    getFunction(nameOrSignature: 'MAX_AFFECTED'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'attestCorrelation'): TypedContractMethod<
+      [incidentId: BytesLike, resultHash: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'correlations'): TypedContractMethod<
       [arg0: BytesLike, ],
       [[string, string, bigint, bigint, string, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, timestamp: bigint, submittedBy: string, exists: boolean }],
       'view'
@@ -157,6 +251,21 @@ getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
 getFunction(nameOrSignature: 'getAffectedDomains'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [string[]],
+      'view'
+    >;
+getFunction(nameOrSignature: 'getConfidence'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'getPendingAffectedDomains'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [string[]],
+      'view'
+    >;
+getFunction(nameOrSignature: 'governanceParams'): TypedContractMethod<
+      [],
+      [string],
       'view'
     >;
 getFunction(nameOrSignature: 'hasCorrelation'): TypedContractMethod<
@@ -174,14 +283,21 @@ getFunction(nameOrSignature: 'isAffectedDomain'): TypedContractMethod<
       [boolean],
       'view'
     >;
-getFunction(nameOrSignature: 'recordCorrelation'): TypedContractMethod<
+getFunction(nameOrSignature: 'pending'): TypedContractMethod<
+      [arg0: BytesLike, ],
+      [[string, string, bigint, string, bigint, bigint, bigint, bigint, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, submittedBy: string, submittedAt: bigint, round: bigint, attestations: bigint, required: bigint, active: boolean }],
+      'view'
+    >;
+getFunction(nameOrSignature: 'submitCorrelation'): TypedContractMethod<
       [incidentId: BytesLike, resultHash: BytesLike, confidence: BigNumberish, _affectedDomains: AddressLike[], algorithmVersionHash: BytesLike, ],
       [void],
       'nonpayable'
     >;
 
     getEvent(key: 'AffectedDomainRecorded'): TypedContractEvent<AffectedDomainRecordedEvent.InputTuple, AffectedDomainRecordedEvent.OutputTuple, AffectedDomainRecordedEvent.OutputObject>;
+getEvent(key: 'CorrelationAttested'): TypedContractEvent<CorrelationAttestedEvent.InputTuple, CorrelationAttestedEvent.OutputTuple, CorrelationAttestedEvent.OutputObject>;
 getEvent(key: 'CorrelationRecorded'): TypedContractEvent<CorrelationRecordedEvent.InputTuple, CorrelationRecordedEvent.OutputTuple, CorrelationRecordedEvent.OutputObject>;
+getEvent(key: 'CorrelationSubmitted'): TypedContractEvent<CorrelationSubmittedEvent.InputTuple, CorrelationSubmittedEvent.OutputTuple, CorrelationSubmittedEvent.OutputObject>;
 
     filters: {
       
@@ -189,8 +305,16 @@ getEvent(key: 'CorrelationRecorded'): TypedContractEvent<CorrelationRecordedEven
       AffectedDomainRecorded: TypedContractEvent<AffectedDomainRecordedEvent.InputTuple, AffectedDomainRecordedEvent.OutputTuple, AffectedDomainRecordedEvent.OutputObject>;
     
 
+      'CorrelationAttested(bytes32,address,uint256,uint256)': TypedContractEvent<CorrelationAttestedEvent.InputTuple, CorrelationAttestedEvent.OutputTuple, CorrelationAttestedEvent.OutputObject>;
+      CorrelationAttested: TypedContractEvent<CorrelationAttestedEvent.InputTuple, CorrelationAttestedEvent.OutputTuple, CorrelationAttestedEvent.OutputObject>;
+    
+
       'CorrelationRecorded(bytes32,bytes32,uint8,bytes32,address,uint256)': TypedContractEvent<CorrelationRecordedEvent.InputTuple, CorrelationRecordedEvent.OutputTuple, CorrelationRecordedEvent.OutputObject>;
       CorrelationRecorded: TypedContractEvent<CorrelationRecordedEvent.InputTuple, CorrelationRecordedEvent.OutputTuple, CorrelationRecordedEvent.OutputObject>;
+    
+
+      'CorrelationSubmitted(bytes32,bytes32,uint8,bytes32,address,uint256,uint256)': TypedContractEvent<CorrelationSubmittedEvent.InputTuple, CorrelationSubmittedEvent.OutputTuple, CorrelationSubmittedEvent.OutputObject>;
+      CorrelationSubmitted: TypedContractEvent<CorrelationSubmittedEvent.InputTuple, CorrelationSubmittedEvent.OutputTuple, CorrelationSubmittedEvent.OutputObject>;
     
     };
   }

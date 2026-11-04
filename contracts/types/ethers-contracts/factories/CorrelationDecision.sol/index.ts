@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { CorrelationDecision__factory } from './CorrelationDecision__factory.js';
+export { IGovernanceParamsCorrelation__factory } from './IGovernanceParamsCorrelation__factory.js';
 export { IIncidentRegistryCorrelation__factory } from './IIncidentRegistryCorrelation__factory.js';

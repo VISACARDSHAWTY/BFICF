@@ -6,15 +6,17 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IIncidentRegistryProposalInterface extends Interface {
-    getFunction(nameOrSignature: "incidents" | "markResponseProposed"): FunctionFragment;
+    getFunction(nameOrSignature: "escalateIncident" | "markResponseProposed" | "stateOf"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'incidents', values: [BytesLike]): string;
+    encodeFunctionData(functionFragment: 'escalateIncident', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'markResponseProposed', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'stateOf', values: [BytesLike]): string;
 
-    decodeFunctionResult(functionFragment: 'incidents', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'escalateIncident', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'markResponseProposed', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'stateOf', data: BytesLike): Result;
   }
 
   
@@ -53,10 +55,10 @@ decodeFunctionResult(functionFragment: 'markResponseProposed', data: BytesLike):
 
     
     
-    incidents: TypedContractMethod<
+    escalateIncident: TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, bigint, bigint, bigint, bigint, string] & {incidentHash: string, incidentType: bigint, severity: bigint, timestamp: bigint, state: bigint, registeredBy: string }],
-      'view'
+      [void],
+      'nonpayable'
     >
     
 
@@ -68,18 +70,31 @@ decodeFunctionResult(functionFragment: 'markResponseProposed', data: BytesLike):
     >
     
 
+    
+    stateOf: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'incidents'): TypedContractMethod<
+    getFunction(nameOrSignature: 'escalateIncident'): TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, bigint, bigint, bigint, bigint, string] & {incidentHash: string, incidentType: bigint, severity: bigint, timestamp: bigint, state: bigint, registeredBy: string }],
-      'view'
+      [void],
+      'nonpayable'
     >;
 getFunction(nameOrSignature: 'markResponseProposed'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
       'nonpayable'
+    >;
+getFunction(nameOrSignature: 'stateOf'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
     >;
 
     

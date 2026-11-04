@@ -6,11 +6,12 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface DomainRegistryInterface extends Interface {
-    getFunction(nameOrSignature: "DEFAULT_ADMIN_ROLE" | "DOMAIN_ROLE" | "SECAUTH_ROLE" | "domains" | "getRoleAdmin" | "grantRole" | "hasRole" | "isActiveDomain" | "isValidator" | "nameToAddress" | "registerDomain" | "renounceRole" | "revokeRole" | "supportsInterface" | "updateDomainStatus"): FunctionFragment;
+    getFunction(nameOrSignature: "CORRELATOR_ROLE" | "DEFAULT_ADMIN_ROLE" | "DOMAIN_ROLE" | "SECAUTH_ROLE" | "domains" | "getRoleAdmin" | "grantRole" | "hasRole" | "isActiveDomain" | "isCorrelator" | "isSecurityAuthority" | "isValidator" | "nameToAddress" | "registerDomain" | "renounceRole" | "revokeRole" | "setCorrelator" | "supportsInterface" | "updateDomainKey" | "updateDomainStatus"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "DomainKeyUpdated" | "DomainRegistered" | "DomainUpdated" | "RoleAdminChanged" | "RoleGranted" | "RoleRevoked"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "CorrelatorUpdated" | "DomainKeyUpdated" | "DomainRegistered" | "DomainUpdated" | "RoleAdminChanged" | "RoleGranted" | "RoleRevoked"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
+    encodeFunctionData(functionFragment: 'CORRELATOR_ROLE', values?: undefined): string;
+encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
 encodeFunctionData(functionFragment: 'DOMAIN_ROLE', values?: undefined): string;
 encodeFunctionData(functionFragment: 'SECAUTH_ROLE', values?: undefined): string;
 encodeFunctionData(functionFragment: 'domains', values: [AddressLike]): string;
@@ -18,15 +19,20 @@ encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): strin
 encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'isActiveDomain', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'isCorrelator', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'isSecurityAuthority', values: [AddressLike]): string;
 encodeFunctionData(functionFragment: 'isValidator', values: [AddressLike]): string;
 encodeFunctionData(functionFragment: 'nameToAddress', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'registerDomain', values: [AddressLike, string, BigNumberish, boolean, BytesLike]): string;
 encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, AddressLike]): string;
+encodeFunctionData(functionFragment: 'setCorrelator', values: [AddressLike, boolean]): string;
 encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'updateDomainKey', values: [AddressLike, BytesLike]): string;
 encodeFunctionData(functionFragment: 'updateDomainStatus', values: [AddressLike, BigNumberish, boolean]): string;
 
-    decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'CORRELATOR_ROLE', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'DOMAIN_ROLE', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'SECAUTH_ROLE', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domains', data: BytesLike): Result;
@@ -34,20 +40,36 @@ decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isActiveDomain', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'isCorrelator', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'isSecurityAuthority', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isValidator', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'nameToAddress', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'registerDomain', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setCorrelator', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'updateDomainKey', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'updateDomainStatus', data: BytesLike): Result;
   }
 
   
+    export namespace CorrelatorUpdatedEvent {
+      export type InputTuple = [account: AddressLike, enabled: boolean];
+      export type OutputTuple = [account: string, enabled: boolean];
+      export interface OutputObject {account: string, enabled: boolean }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
     export namespace DomainKeyUpdatedEvent {
-      export type InputTuple = [account: AddressLike];
-      export type OutputTuple = [account: string];
-      export interface OutputObject {account: string }
+      export type InputTuple = [account: AddressLike, newKeyHash: BytesLike];
+      export type OutputTuple = [account: string, newKeyHash: string];
+      export interface OutputObject {account: string, newKeyHash: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -150,6 +172,14 @@ decodeFunctionResult(functionFragment: 'updateDomainStatus', data: BytesLike): R
 
     
     
+    CORRELATOR_ROLE: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
     DEFAULT_ADMIN_ROLE: TypedContractMethod<
       [],
       [string],
@@ -214,6 +244,22 @@ decodeFunctionResult(functionFragment: 'updateDomainStatus', data: BytesLike): R
     
 
     
+    isCorrelator: TypedContractMethod<
+      [account: AddressLike, ],
+      [boolean],
+      'view'
+    >
+    
+
+    
+    isSecurityAuthority: TypedContractMethod<
+      [account: AddressLike, ],
+      [boolean],
+      'view'
+    >
+    
+
+    
     isValidator: TypedContractMethod<
       [account: AddressLike, ],
       [boolean],
@@ -254,10 +300,26 @@ decodeFunctionResult(functionFragment: 'updateDomainStatus', data: BytesLike): R
     
 
     
+    setCorrelator: TypedContractMethod<
+      [account: AddressLike, enabled: boolean, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     supportsInterface: TypedContractMethod<
       [interfaceId: BytesLike, ],
       [boolean],
       'view'
+    >
+    
+
+    
+    updateDomainKey: TypedContractMethod<
+      [account: AddressLike, newPublicKey: BytesLike, ],
+      [void],
+      'nonpayable'
     >
     
 
@@ -272,7 +334,12 @@ decodeFunctionResult(functionFragment: 'updateDomainStatus', data: BytesLike): R
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'DEFAULT_ADMIN_ROLE'): TypedContractMethod<
+    getFunction(nameOrSignature: 'CORRELATOR_ROLE'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'DEFAULT_ADMIN_ROLE'): TypedContractMethod<
       [],
       [string],
       'view'
@@ -312,6 +379,16 @@ getFunction(nameOrSignature: 'isActiveDomain'): TypedContractMethod<
       [boolean],
       'view'
     >;
+getFunction(nameOrSignature: 'isCorrelator'): TypedContractMethod<
+      [account: AddressLike, ],
+      [boolean],
+      'view'
+    >;
+getFunction(nameOrSignature: 'isSecurityAuthority'): TypedContractMethod<
+      [account: AddressLike, ],
+      [boolean],
+      'view'
+    >;
 getFunction(nameOrSignature: 'isValidator'): TypedContractMethod<
       [account: AddressLike, ],
       [boolean],
@@ -337,10 +414,20 @@ getFunction(nameOrSignature: 'revokeRole'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'setCorrelator'): TypedContractMethod<
+      [account: AddressLike, enabled: boolean, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'supportsInterface'): TypedContractMethod<
       [interfaceId: BytesLike, ],
       [boolean],
       'view'
+    >;
+getFunction(nameOrSignature: 'updateDomainKey'): TypedContractMethod<
+      [account: AddressLike, newPublicKey: BytesLike, ],
+      [void],
+      'nonpayable'
     >;
 getFunction(nameOrSignature: 'updateDomainStatus'): TypedContractMethod<
       [account: AddressLike, status: BigNumberish, _isValidator: boolean, ],
@@ -348,7 +435,8 @@ getFunction(nameOrSignature: 'updateDomainStatus'): TypedContractMethod<
       'nonpayable'
     >;
 
-    getEvent(key: 'DomainKeyUpdated'): TypedContractEvent<DomainKeyUpdatedEvent.InputTuple, DomainKeyUpdatedEvent.OutputTuple, DomainKeyUpdatedEvent.OutputObject>;
+    getEvent(key: 'CorrelatorUpdated'): TypedContractEvent<CorrelatorUpdatedEvent.InputTuple, CorrelatorUpdatedEvent.OutputTuple, CorrelatorUpdatedEvent.OutputObject>;
+getEvent(key: 'DomainKeyUpdated'): TypedContractEvent<DomainKeyUpdatedEvent.InputTuple, DomainKeyUpdatedEvent.OutputTuple, DomainKeyUpdatedEvent.OutputObject>;
 getEvent(key: 'DomainRegistered'): TypedContractEvent<DomainRegisteredEvent.InputTuple, DomainRegisteredEvent.OutputTuple, DomainRegisteredEvent.OutputObject>;
 getEvent(key: 'DomainUpdated'): TypedContractEvent<DomainUpdatedEvent.InputTuple, DomainUpdatedEvent.OutputTuple, DomainUpdatedEvent.OutputObject>;
 getEvent(key: 'RoleAdminChanged'): TypedContractEvent<RoleAdminChangedEvent.InputTuple, RoleAdminChangedEvent.OutputTuple, RoleAdminChangedEvent.OutputObject>;
@@ -357,7 +445,11 @@ getEvent(key: 'RoleRevoked'): TypedContractEvent<RoleRevokedEvent.InputTuple, Ro
 
     filters: {
       
-      'DomainKeyUpdated(address)': TypedContractEvent<DomainKeyUpdatedEvent.InputTuple, DomainKeyUpdatedEvent.OutputTuple, DomainKeyUpdatedEvent.OutputObject>;
+      'CorrelatorUpdated(address,bool)': TypedContractEvent<CorrelatorUpdatedEvent.InputTuple, CorrelatorUpdatedEvent.OutputTuple, CorrelatorUpdatedEvent.OutputObject>;
+      CorrelatorUpdated: TypedContractEvent<CorrelatorUpdatedEvent.InputTuple, CorrelatorUpdatedEvent.OutputTuple, CorrelatorUpdatedEvent.OutputObject>;
+    
+
+      'DomainKeyUpdated(address,bytes32)': TypedContractEvent<DomainKeyUpdatedEvent.InputTuple, DomainKeyUpdatedEvent.OutputTuple, DomainKeyUpdatedEvent.OutputObject>;
       DomainKeyUpdated: TypedContractEvent<DomainKeyUpdatedEvent.InputTuple, DomainKeyUpdatedEvent.OutputTuple, DomainKeyUpdatedEvent.OutputObject>;
     
 

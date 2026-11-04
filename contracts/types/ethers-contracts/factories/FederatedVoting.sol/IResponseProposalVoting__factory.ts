@@ -57,6 +57,19 @@
         "type": "uint256"
       }
     ],
+    "name": "markVotingStarted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      }
+    ],
     "name": "proposals",
     "outputs": [
       {

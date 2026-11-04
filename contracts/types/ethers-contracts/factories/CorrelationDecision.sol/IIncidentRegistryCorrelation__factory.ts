@@ -14,37 +14,12 @@
         "type": "bytes32"
       }
     ],
-    "name": "incidents",
+    "name": "incidentExists",
     "outputs": [
       {
-        "internalType": "bytes32",
-        "name": "incidentHash",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint8",
-        "name": "incidentType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "severity",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "state",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "registeredBy",
-        "type": "address"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -61,6 +36,25 @@
     "name": "markCorrelated",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "stateOf",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ] as const;

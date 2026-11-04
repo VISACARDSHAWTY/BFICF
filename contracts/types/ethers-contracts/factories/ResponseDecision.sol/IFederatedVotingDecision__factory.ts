@@ -12,19 +12,66 @@
         "internalType": "uint256",
         "name": "proposalId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "choice",
-        "type": "uint8"
       }
     ],
-    "name": "getVoteCount",
+    "name": "getSession",
     "outputs": [
       {
-        "internalType": "uint256",
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "started",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "finalized",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "commitEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "revealEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "eligibleCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "revealedCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quarantineThreshold",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "revokeThreshold",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "patchThreshold",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quorumBasisPoints",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IFederatedVotingDecision.VotingSession",
         "name": "",
-        "type": "uint256"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -38,57 +85,12 @@
         "type": "uint256"
       }
     ],
-    "name": "getVotingData",
+    "name": "getVoteCounts",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "started",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "finalized",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "commitEnd",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "revealEnd",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "eligibleCount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "revealedCount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "quarantineThreshold",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "revokeThreshold",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "patchThreshold",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "quorumBasisPoints",
-        "type": "uint256"
+        "internalType": "uint256[5]",
+        "name": "",
+        "type": "uint256[5]"
       }
     ],
     "stateMutability": "view",

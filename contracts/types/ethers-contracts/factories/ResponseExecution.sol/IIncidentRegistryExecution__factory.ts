@@ -14,6 +14,19 @@
         "type": "bytes32"
       }
     ],
+    "name": "escalateIncident",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
     "name": "startExecution",
     "outputs": [],
     "stateMutability": "nonpayable",

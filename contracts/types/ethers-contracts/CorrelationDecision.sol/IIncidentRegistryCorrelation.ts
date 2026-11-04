@@ -6,15 +6,17 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IIncidentRegistryCorrelationInterface extends Interface {
-    getFunction(nameOrSignature: "incidents" | "markCorrelated"): FunctionFragment;
+    getFunction(nameOrSignature: "incidentExists" | "markCorrelated" | "stateOf"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'incidents', values: [BytesLike]): string;
+    encodeFunctionData(functionFragment: 'incidentExists', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'markCorrelated', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'stateOf', values: [BytesLike]): string;
 
-    decodeFunctionResult(functionFragment: 'incidents', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'incidentExists', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'markCorrelated', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'stateOf', data: BytesLike): Result;
   }
 
   
@@ -53,9 +55,9 @@ decodeFunctionResult(functionFragment: 'markCorrelated', data: BytesLike): Resul
 
     
     
-    incidents: TypedContractMethod<
+    incidentExists: TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, bigint, bigint, bigint, bigint, string] & {incidentHash: string, incidentType: bigint, severity: bigint, timestamp: bigint, state: bigint, registeredBy: string }],
+      [boolean],
       'view'
     >
     
@@ -68,18 +70,31 @@ decodeFunctionResult(functionFragment: 'markCorrelated', data: BytesLike): Resul
     >
     
 
+    
+    stateOf: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'incidents'): TypedContractMethod<
+    getFunction(nameOrSignature: 'incidentExists'): TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, bigint, bigint, bigint, bigint, string] & {incidentHash: string, incidentType: bigint, severity: bigint, timestamp: bigint, state: bigint, registeredBy: string }],
+      [boolean],
       'view'
     >;
 getFunction(nameOrSignature: 'markCorrelated'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
       'nonpayable'
+    >;
+getFunction(nameOrSignature: 'stateOf'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
+      'view'
     >;
 
     

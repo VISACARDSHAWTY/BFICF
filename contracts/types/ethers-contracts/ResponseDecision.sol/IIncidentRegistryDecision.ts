@@ -6,13 +6,15 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IIncidentRegistryDecisionInterface extends Interface {
-    getFunction(nameOrSignature: "finalizeIncidentDecision"): FunctionFragment;
+    getFunction(nameOrSignature: "escalateIncident" | "finalizeIncidentDecision"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'finalizeIncidentDecision', values: [BytesLike, boolean]): string;
+    encodeFunctionData(functionFragment: 'escalateIncident', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'finalizeIncidentDecision', values: [BytesLike, boolean]): string;
 
-    decodeFunctionResult(functionFragment: 'finalizeIncidentDecision', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'escalateIncident', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'finalizeIncidentDecision', data: BytesLike): Result;
   }
 
   
@@ -51,6 +53,14 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
 
     
     
+    escalateIncident: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     finalizeIncidentDecision: TypedContractMethod<
       [incidentId: BytesLike, approved: boolean, ],
       [void],
@@ -61,7 +71,12 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'finalizeIncidentDecision'): TypedContractMethod<
+    getFunction(nameOrSignature: 'escalateIncident'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'finalizeIncidentDecision'): TypedContractMethod<
       [incidentId: BytesLike, approved: boolean, ],
       [void],
       'nonpayable'

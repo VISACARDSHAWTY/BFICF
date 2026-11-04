@@ -6,62 +6,78 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 export declare namespace ResponseExecution {
       
-    export type ActionInputStruct = {responsibleDomain: AddressLike, actionType: BytesLike, targetResourceId: BytesLike, detailsHash: BytesLike}
+    export type ActionInputStruct = {responsibleDomain: AddressLike, actionType: BigNumberish, detailsHash: BytesLike}
 
-    export type ActionInputStructOutput = [responsibleDomain: string, actionType: string, targetResourceId: string, detailsHash: string] & {responsibleDomain: string, actionType: string, targetResourceId: string, detailsHash: string }
+    export type ActionInputStructOutput = [responsibleDomain: string, actionType: bigint, detailsHash: string] & {responsibleDomain: string, actionType: bigint, detailsHash: string }
   
 
-    export type ExecutionActionStruct = {proposalId: BigNumberish, incidentId: BytesLike, responsibleDomain: AddressLike, actionType: BytesLike, targetResourceId: BytesLike, detailsHash: BytesLike, receiptHash: BytesLike, reportedAt: BigNumberish, status: BigNumberish}
+    export type ExecutionActionStruct = {proposalId: BigNumberish, incidentId: BytesLike, responsibleDomain: AddressLike, actionType: BigNumberish, targetResourceId: BytesLike, detailsHash: BytesLike, receiptHash: BytesLike, reportedAt: BigNumberish, status: BigNumberish}
 
-    export type ExecutionActionStructOutput = [proposalId: bigint, incidentId: string, responsibleDomain: string, actionType: string, targetResourceId: string, detailsHash: string, receiptHash: string, reportedAt: bigint, status: bigint] & {proposalId: bigint, incidentId: string, responsibleDomain: string, actionType: string, targetResourceId: string, detailsHash: string, receiptHash: string, reportedAt: bigint, status: bigint }
+    export type ExecutionActionStructOutput = [proposalId: bigint, incidentId: string, responsibleDomain: string, actionType: bigint, targetResourceId: string, detailsHash: string, receiptHash: string, reportedAt: bigint, status: bigint] & {proposalId: bigint, incidentId: string, responsibleDomain: string, actionType: bigint, targetResourceId: string, detailsHash: string, receiptHash: string, reportedAt: bigint, status: bigint }
   
     }
 
   export interface ResponseExecutionInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "createExecutionPlan" | "dic" | "domainRegistry" | "executionPlans" | "getAction" | "getPlanProgress" | "incidentRegistry" | "markActionVerified" | "nextActionId" | "reportExecution" | "responseDecision" | "responseProposal" | "setDIC" | "setVerificationContract" | "verificationContract"): FunctionFragment;
+    getFunction(nameOrSignature: "ACTION_BLOCK_TRAFFIC" | "ACTION_MONITOR" | "ACTION_NO_ACTION" | "ACTION_PATCH" | "ACTION_QUARANTINE" | "ACTION_REVOKE" | "MAX_ACTIONS" | "createExecutionPlan" | "domainRegistry" | "escalateStalled" | "executionPlans" | "executionWindow" | "getAction" | "getPlanProgress" | "getProposalActionIds" | "incidentRegistry" | "markActionVerified" | "nextActionId" | "reportExecution" | "responseDecision" | "responseProposal" | "setExecutionWindow" | "setVerificationContract" | "verificationContract"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "ActionAssigned" | "ActionVerificationUpdated" | "DICUpdated" | "ExecutionPlanCreated" | "ExecutionReported" | "VerificationContractUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ActionAssigned" | "ActionVerificationUpdated" | "ExecutionEscalated" | "ExecutionPlanCreated" | "ExecutionReported" | "ExecutionWindowUpdated" | "VerificationContractUpdated"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
+    encodeFunctionData(functionFragment: 'ACTION_BLOCK_TRAFFIC', values?: undefined): string;
+encodeFunctionData(functionFragment: 'ACTION_MONITOR', values?: undefined): string;
+encodeFunctionData(functionFragment: 'ACTION_NO_ACTION', values?: undefined): string;
+encodeFunctionData(functionFragment: 'ACTION_PATCH', values?: undefined): string;
+encodeFunctionData(functionFragment: 'ACTION_QUARANTINE', values?: undefined): string;
+encodeFunctionData(functionFragment: 'ACTION_REVOKE', values?: undefined): string;
+encodeFunctionData(functionFragment: 'MAX_ACTIONS', values?: undefined): string;
 encodeFunctionData(functionFragment: 'createExecutionPlan', values: [BigNumberish, ResponseExecution.ActionInputStruct[]]): string;
-encodeFunctionData(functionFragment: 'dic', values?: undefined): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
+encodeFunctionData(functionFragment: 'escalateStalled', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'executionPlans', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'executionWindow', values?: undefined): string;
 encodeFunctionData(functionFragment: 'getAction', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'getPlanProgress', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'getProposalActionIds', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'incidentRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'markActionVerified', values: [BigNumberish, boolean]): string;
 encodeFunctionData(functionFragment: 'nextActionId', values?: undefined): string;
 encodeFunctionData(functionFragment: 'reportExecution', values: [BigNumberish, BytesLike]): string;
 encodeFunctionData(functionFragment: 'responseDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'responseProposal', values?: undefined): string;
-encodeFunctionData(functionFragment: 'setDIC', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'setExecutionWindow', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'setVerificationContract', values: [AddressLike]): string;
 encodeFunctionData(functionFragment: 'verificationContract', values?: undefined): string;
 
-    decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'ACTION_BLOCK_TRAFFIC', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'ACTION_MONITOR', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'ACTION_NO_ACTION', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'ACTION_PATCH', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'ACTION_QUARANTINE', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'ACTION_REVOKE', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'MAX_ACTIONS', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'createExecutionPlan', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'dic', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'escalateStalled', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'executionPlans', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'executionWindow', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getAction', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getPlanProgress', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getProposalActionIds', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidentRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'markActionVerified', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'nextActionId', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'reportExecution', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'responseDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'setDIC', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setExecutionWindow', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setVerificationContract', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike): Result;
   }
 
   
     export namespace ActionAssignedEvent {
-      export type InputTuple = [actionId: BigNumberish, proposalId: BigNumberish, responsibleDomain: AddressLike, actionType: BytesLike, targetResourceId: BytesLike];
-      export type OutputTuple = [actionId: bigint, proposalId: bigint, responsibleDomain: string, actionType: string, targetResourceId: string];
-      export interface OutputObject {actionId: bigint, proposalId: bigint, responsibleDomain: string, actionType: string, targetResourceId: string }
+      export type InputTuple = [actionId: BigNumberish, proposalId: BigNumberish, responsibleDomain: AddressLike, actionType: BigNumberish, targetResourceId: BytesLike];
+      export type OutputTuple = [actionId: bigint, proposalId: bigint, responsibleDomain: string, actionType: bigint, targetResourceId: string];
+      export interface OutputObject {actionId: bigint, proposalId: bigint, responsibleDomain: string, actionType: bigint, targetResourceId: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -82,10 +98,10 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
 
   
 
-    export namespace DICUpdatedEvent {
-      export type InputTuple = [dic: AddressLike];
-      export type OutputTuple = [dic: string];
-      export interface OutputObject {dic: string }
+    export namespace ExecutionEscalatedEvent {
+      export type InputTuple = [proposalId: BigNumberish, incidentId: BytesLike];
+      export type OutputTuple = [proposalId: bigint, incidentId: string];
+      export interface OutputObject {proposalId: bigint, incidentId: string }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -95,9 +111,9 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
   
 
     export namespace ExecutionPlanCreatedEvent {
-      export type InputTuple = [proposalId: BigNumberish, incidentId: BytesLike, totalActions: BigNumberish];
-      export type OutputTuple = [proposalId: bigint, incidentId: string, totalActions: bigint];
-      export interface OutputObject {proposalId: bigint, incidentId: string, totalActions: bigint }
+      export type InputTuple = [proposalId: BigNumberish, incidentId: BytesLike, totalActions: BigNumberish, deadline: BigNumberish];
+      export type OutputTuple = [proposalId: bigint, incidentId: string, totalActions: bigint, deadline: bigint];
+      export interface OutputObject {proposalId: bigint, incidentId: string, totalActions: bigint, deadline: bigint }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -110,6 +126,18 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
       export type InputTuple = [actionId: BigNumberish, responsibleDomain: AddressLike, receiptHash: BytesLike, timestamp: BigNumberish];
       export type OutputTuple = [actionId: bigint, responsibleDomain: string, receiptHash: string, timestamp: bigint];
       export interface OutputObject {actionId: bigint, responsibleDomain: string, receiptHash: string, timestamp: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace ExecutionWindowUpdatedEvent {
+      export type InputTuple = [window: BigNumberish];
+      export type OutputTuple = [window: bigint];
+      export interface OutputObject {window: bigint }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -164,26 +192,66 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
 
     
     
-    admin: TypedContractMethod<
+    ACTION_BLOCK_TRAFFIC: TypedContractMethod<
       [],
-      [string],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    ACTION_MONITOR: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    ACTION_NO_ACTION: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    ACTION_PATCH: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    ACTION_QUARANTINE: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    ACTION_REVOKE: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
+    MAX_ACTIONS: TypedContractMethod<
+      [],
+      [bigint],
       'view'
     >
     
 
     
     createExecutionPlan: TypedContractMethod<
-      [proposalId: BigNumberish, actionInputs: ResponseExecution.ActionInputStruct[], ],
+      [proposalId: BigNumberish, inputs: ResponseExecution.ActionInputStruct[], ],
       [void],
       'nonpayable'
-    >
-    
-
-    
-    dic: TypedContractMethod<
-      [],
-      [string],
-      'view'
     >
     
 
@@ -196,9 +264,25 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
     
 
     
+    escalateStalled: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     executionPlans: TypedContractMethod<
       [arg0: BigNumberish, ],
-      [[string, bigint, bigint, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, created: boolean }],
+      [[string, bigint, bigint, bigint, boolean, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, deadline: bigint, created: boolean, escalated: boolean }],
+      'view'
+    >
+    
+
+    
+    executionWindow: TypedContractMethod<
+      [],
+      [bigint],
       'view'
     >
     
@@ -215,6 +299,14 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
     getPlanProgress: TypedContractMethod<
       [proposalId: BigNumberish, ],
       [[string, bigint, bigint, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, complete: boolean }],
+      'view'
+    >
+    
+
+    
+    getProposalActionIds: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [bigint[]],
       'view'
     >
     
@@ -268,8 +360,8 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
     
 
     
-    setDIC: TypedContractMethod<
-      [_dic: AddressLike, ],
+    setExecutionWindow: TypedContractMethod<
+      [_window: BigNumberish, ],
       [void],
       'nonpayable'
     >
@@ -294,29 +386,64 @@ decodeFunctionResult(functionFragment: 'verificationContract', data: BytesLike):
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'admin'): TypedContractMethod<
+    getFunction(nameOrSignature: 'ACTION_BLOCK_TRAFFIC'): TypedContractMethod<
       [],
-      [string],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'ACTION_MONITOR'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'ACTION_NO_ACTION'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'ACTION_PATCH'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'ACTION_QUARANTINE'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'ACTION_REVOKE'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'MAX_ACTIONS'): TypedContractMethod<
+      [],
+      [bigint],
       'view'
     >;
 getFunction(nameOrSignature: 'createExecutionPlan'): TypedContractMethod<
-      [proposalId: BigNumberish, actionInputs: ResponseExecution.ActionInputStruct[], ],
+      [proposalId: BigNumberish, inputs: ResponseExecution.ActionInputStruct[], ],
       [void],
       'nonpayable'
-    >;
-getFunction(nameOrSignature: 'dic'): TypedContractMethod<
-      [],
-      [string],
-      'view'
     >;
 getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
       [],
       [string],
       'view'
     >;
+getFunction(nameOrSignature: 'escalateStalled'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'executionPlans'): TypedContractMethod<
       [arg0: BigNumberish, ],
-      [[string, bigint, bigint, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, created: boolean }],
+      [[string, bigint, bigint, bigint, boolean, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, deadline: bigint, created: boolean, escalated: boolean }],
+      'view'
+    >;
+getFunction(nameOrSignature: 'executionWindow'): TypedContractMethod<
+      [],
+      [bigint],
       'view'
     >;
 getFunction(nameOrSignature: 'getAction'): TypedContractMethod<
@@ -327,6 +454,11 @@ getFunction(nameOrSignature: 'getAction'): TypedContractMethod<
 getFunction(nameOrSignature: 'getPlanProgress'): TypedContractMethod<
       [proposalId: BigNumberish, ],
       [[string, bigint, bigint, boolean] & {incidentId: string, totalActions: bigint, verifiedActions: bigint, complete: boolean }],
+      'view'
+    >;
+getFunction(nameOrSignature: 'getProposalActionIds'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [bigint[]],
       'view'
     >;
 getFunction(nameOrSignature: 'incidentRegistry'): TypedContractMethod<
@@ -359,8 +491,8 @@ getFunction(nameOrSignature: 'responseProposal'): TypedContractMethod<
       [string],
       'view'
     >;
-getFunction(nameOrSignature: 'setDIC'): TypedContractMethod<
-      [_dic: AddressLike, ],
+getFunction(nameOrSignature: 'setExecutionWindow'): TypedContractMethod<
+      [_window: BigNumberish, ],
       [void],
       'nonpayable'
     >;
@@ -377,14 +509,15 @@ getFunction(nameOrSignature: 'verificationContract'): TypedContractMethod<
 
     getEvent(key: 'ActionAssigned'): TypedContractEvent<ActionAssignedEvent.InputTuple, ActionAssignedEvent.OutputTuple, ActionAssignedEvent.OutputObject>;
 getEvent(key: 'ActionVerificationUpdated'): TypedContractEvent<ActionVerificationUpdatedEvent.InputTuple, ActionVerificationUpdatedEvent.OutputTuple, ActionVerificationUpdatedEvent.OutputObject>;
-getEvent(key: 'DICUpdated'): TypedContractEvent<DICUpdatedEvent.InputTuple, DICUpdatedEvent.OutputTuple, DICUpdatedEvent.OutputObject>;
+getEvent(key: 'ExecutionEscalated'): TypedContractEvent<ExecutionEscalatedEvent.InputTuple, ExecutionEscalatedEvent.OutputTuple, ExecutionEscalatedEvent.OutputObject>;
 getEvent(key: 'ExecutionPlanCreated'): TypedContractEvent<ExecutionPlanCreatedEvent.InputTuple, ExecutionPlanCreatedEvent.OutputTuple, ExecutionPlanCreatedEvent.OutputObject>;
 getEvent(key: 'ExecutionReported'): TypedContractEvent<ExecutionReportedEvent.InputTuple, ExecutionReportedEvent.OutputTuple, ExecutionReportedEvent.OutputObject>;
+getEvent(key: 'ExecutionWindowUpdated'): TypedContractEvent<ExecutionWindowUpdatedEvent.InputTuple, ExecutionWindowUpdatedEvent.OutputTuple, ExecutionWindowUpdatedEvent.OutputObject>;
 getEvent(key: 'VerificationContractUpdated'): TypedContractEvent<VerificationContractUpdatedEvent.InputTuple, VerificationContractUpdatedEvent.OutputTuple, VerificationContractUpdatedEvent.OutputObject>;
 
     filters: {
       
-      'ActionAssigned(uint256,uint256,address,bytes32,bytes32)': TypedContractEvent<ActionAssignedEvent.InputTuple, ActionAssignedEvent.OutputTuple, ActionAssignedEvent.OutputObject>;
+      'ActionAssigned(uint256,uint256,address,uint8,bytes32)': TypedContractEvent<ActionAssignedEvent.InputTuple, ActionAssignedEvent.OutputTuple, ActionAssignedEvent.OutputObject>;
       ActionAssigned: TypedContractEvent<ActionAssignedEvent.InputTuple, ActionAssignedEvent.OutputTuple, ActionAssignedEvent.OutputObject>;
     
 
@@ -392,16 +525,20 @@ getEvent(key: 'VerificationContractUpdated'): TypedContractEvent<VerificationCon
       ActionVerificationUpdated: TypedContractEvent<ActionVerificationUpdatedEvent.InputTuple, ActionVerificationUpdatedEvent.OutputTuple, ActionVerificationUpdatedEvent.OutputObject>;
     
 
-      'DICUpdated(address)': TypedContractEvent<DICUpdatedEvent.InputTuple, DICUpdatedEvent.OutputTuple, DICUpdatedEvent.OutputObject>;
-      DICUpdated: TypedContractEvent<DICUpdatedEvent.InputTuple, DICUpdatedEvent.OutputTuple, DICUpdatedEvent.OutputObject>;
+      'ExecutionEscalated(uint256,bytes32)': TypedContractEvent<ExecutionEscalatedEvent.InputTuple, ExecutionEscalatedEvent.OutputTuple, ExecutionEscalatedEvent.OutputObject>;
+      ExecutionEscalated: TypedContractEvent<ExecutionEscalatedEvent.InputTuple, ExecutionEscalatedEvent.OutputTuple, ExecutionEscalatedEvent.OutputObject>;
     
 
-      'ExecutionPlanCreated(uint256,bytes32,uint256)': TypedContractEvent<ExecutionPlanCreatedEvent.InputTuple, ExecutionPlanCreatedEvent.OutputTuple, ExecutionPlanCreatedEvent.OutputObject>;
+      'ExecutionPlanCreated(uint256,bytes32,uint256,uint256)': TypedContractEvent<ExecutionPlanCreatedEvent.InputTuple, ExecutionPlanCreatedEvent.OutputTuple, ExecutionPlanCreatedEvent.OutputObject>;
       ExecutionPlanCreated: TypedContractEvent<ExecutionPlanCreatedEvent.InputTuple, ExecutionPlanCreatedEvent.OutputTuple, ExecutionPlanCreatedEvent.OutputObject>;
     
 
       'ExecutionReported(uint256,address,bytes32,uint256)': TypedContractEvent<ExecutionReportedEvent.InputTuple, ExecutionReportedEvent.OutputTuple, ExecutionReportedEvent.OutputObject>;
       ExecutionReported: TypedContractEvent<ExecutionReportedEvent.InputTuple, ExecutionReportedEvent.OutputTuple, ExecutionReportedEvent.OutputObject>;
+    
+
+      'ExecutionWindowUpdated(uint256)': TypedContractEvent<ExecutionWindowUpdatedEvent.InputTuple, ExecutionWindowUpdatedEvent.OutputTuple, ExecutionWindowUpdatedEvent.OutputObject>;
+      ExecutionWindowUpdated: TypedContractEvent<ExecutionWindowUpdatedEvent.InputTuple, ExecutionWindowUpdatedEvent.OutputTuple, ExecutionWindowUpdatedEvent.OutputObject>;
     
 
       'VerificationContractUpdated(address)': TypedContractEvent<VerificationContractUpdatedEvent.InputTuple, VerificationContractUpdatedEvent.OutputTuple, VerificationContractUpdatedEvent.OutputObject>;

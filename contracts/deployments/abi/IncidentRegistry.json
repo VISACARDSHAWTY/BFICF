@@ -1,0 +1,586 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_domainRegistry",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "coordinatedResponseExecution",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "executionVerification",
+        "type": "address"
+      }
+    ],
+    "name": "ExecutionContractsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "federatedVoting",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "responseDecision",
+        "type": "address"
+      }
+    ],
+    "name": "GovernanceContractsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "closedBy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "closureHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "IncidentClosed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "registeredBy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "vectorCommitment",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IncidentRegistry.IncidentType",
+        "name": "incidentType",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "severity",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "detectedAt",
+        "type": "uint256"
+      }
+    ],
+    "name": "IncidentRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IncidentRegistry.IncidentState",
+        "name": "oldState",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IncidentRegistry.IncidentState",
+        "name": "newState",
+        "type": "uint8"
+      }
+    ],
+    "name": "IncidentStateUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "correlationDecision",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "responseProposal",
+        "type": "address"
+      }
+    ],
+    "name": "WorkflowContractsUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_CLOCK_SKEW",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "closureHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "closeIncident",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "coordinatedResponseExecution",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "correlationDecision",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "domainRegistry",
+    "outputs": [
+      {
+        "internalType": "contract DomainRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "escalateIncident",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "executionVerification",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "federatedVoting",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "finalizeIncidentDecision",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "forceEscalateApproved",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "incidentExists",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "incidents",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "vectorCommitment",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "enum IncidentRegistry.IncidentType",
+        "name": "incidentType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "severity",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "detectedAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "registeredAt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum IncidentRegistry.IncidentState",
+        "name": "state",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "registeredBy",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "closureHash",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "markCorrelated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "markIncidentVerified",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "markResponseProposed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "vectorCommitment",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "enum IncidentRegistry.IncidentType",
+        "name": "incidentType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "severity",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "detectedAt",
+        "type": "uint256"
+      }
+    ],
+    "name": "registerIncident",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "reopenIncident",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "responseDecision",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "responseProposal",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_execution",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_verification",
+        "type": "address"
+      }
+    ],
+    "name": "setExecutionContracts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_federatedVoting",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_responseDecision",
+        "type": "address"
+      }
+    ],
+    "name": "setGovernanceContracts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_correlationDecision",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_responseProposal",
+        "type": "address"
+      }
+    ],
+    "name": "setWorkflowContracts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "startExecution",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "startVoting",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "stateOf",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

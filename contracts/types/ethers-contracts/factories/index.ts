@@ -2,12 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as correlationDecisionSol from './CorrelationDecision.sol/index.js';
-export * as executionVerficationSol from './ExecutionVerfication.sol/index.js';
+export * as deviceRecoverySol from './DeviceRecovery.sol/index.js';
+export * as deviceRegistrySol from './DeviceRegistry.sol/index.js';
+export * as evidenceCommitmentSol from './EvidenceCommitment.sol/index.js';
+export * as executionVerificationSol from './ExecutionVerification.sol/index.js';
 export * as federatedVotingSol from './FederatedVoting.sol/index.js';
 export * as responseDecisionSol from './ResponseDecision.sol/index.js';
 export * as responseExecutionSol from './ResponseExecution.sol/index.js';
 export * as responseProposalSol from './ResponseProposal.sol/index.js';
 export { DomainRegistry__factory } from './DomainRegistry__factory.js';
-export { EvidenceCommitment__factory } from './EvidenceCommitment__factory.js';
 export { GovernanceParams__factory } from './GovernanceParams__factory.js';
 export { IncidentRegistry__factory } from './IncidentRegistry__factory.js';

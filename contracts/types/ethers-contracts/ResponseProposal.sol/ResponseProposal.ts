@@ -6,49 +6,61 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface ResponseProposalInterface extends Interface {
-    getFunction(nameOrSignature: "MAX_VOTING_PERIOD" | "MIN_VOTING_PERIOD" | "admin" | "correlationDecision" | "createProposal" | "domainRegistry" | "expireProposal" | "finalizeProposal" | "getActions" | "getEligibleVoters" | "incidentRegistry" | "isEligibleVoter" | "isVotingOpen" | "minimumConfidenceClass" | "nextProposalId" | "proposals" | "responseDecision" | "setMinimumConfidenceClass" | "setResponseDecision"): FunctionFragment;
+    getFunction(nameOrSignature: "MAX_ACTIONS" | "MAX_VOTING_PERIOD" | "MIN_VOTING_PERIOD" | "correlationDecision" | "createProposal" | "domainRegistry" | "evidenceCommitment" | "expireProposal" | "finalizeProposal" | "getActions" | "getEligibleVoters" | "hasAction" | "incidentRegistry" | "isEligibleVoter" | "isVotingOpen" | "markVotingStarted" | "minimumConfidenceClass" | "nextProposalId" | "proposals" | "responseDecision" | "setMinimumConfidenceClass" | "setResponseDecision" | "setVotingContract" | "votingContract" | "votingStarted"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "EligibleVoterAdded" | "MinimumConfidenceUpdated" | "ProposalActionAdded" | "ProposalCreated" | "ProposalExpired" | "ProposalFinalized" | "ResponseDecisionUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "EligibleVoterAdded" | "MinimumConfidenceUpdated" | "ProposalActionAdded" | "ProposalCreated" | "ProposalExpired" | "ProposalFinalized" | "ResponseDecisionUpdated" | "VotingContractUpdated"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'MAX_VOTING_PERIOD', values?: undefined): string;
+    encodeFunctionData(functionFragment: 'MAX_ACTIONS', values?: undefined): string;
+encodeFunctionData(functionFragment: 'MAX_VOTING_PERIOD', values?: undefined): string;
 encodeFunctionData(functionFragment: 'MIN_VOTING_PERIOD', values?: undefined): string;
-encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
 encodeFunctionData(functionFragment: 'correlationDecision', values?: undefined): string;
-encodeFunctionData(functionFragment: 'createProposal', values: [BytesLike, AddressLike, BytesLike, BigNumberish[], BytesLike, AddressLike[], BigNumberish]): string;
+encodeFunctionData(functionFragment: 'createProposal', values: [BytesLike, AddressLike, BytesLike, BigNumberish[], BytesLike, BigNumberish]): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
+encodeFunctionData(functionFragment: 'evidenceCommitment', values?: undefined): string;
 encodeFunctionData(functionFragment: 'expireProposal', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'finalizeProposal', values: [BigNumberish, boolean]): string;
 encodeFunctionData(functionFragment: 'getActions', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'getEligibleVoters', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'hasAction', values: [BigNumberish, BigNumberish]): string;
 encodeFunctionData(functionFragment: 'incidentRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'isEligibleVoter', values: [BigNumberish, AddressLike]): string;
 encodeFunctionData(functionFragment: 'isVotingOpen', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'markVotingStarted', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'minimumConfidenceClass', values?: undefined): string;
 encodeFunctionData(functionFragment: 'nextProposalId', values?: undefined): string;
 encodeFunctionData(functionFragment: 'proposals', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'responseDecision', values?: undefined): string;
 encodeFunctionData(functionFragment: 'setMinimumConfidenceClass', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'setResponseDecision', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'setVotingContract', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'votingContract', values?: undefined): string;
+encodeFunctionData(functionFragment: 'votingStarted', values: [BigNumberish]): string;
 
-    decodeFunctionResult(functionFragment: 'MAX_VOTING_PERIOD', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'MAX_ACTIONS', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'MAX_VOTING_PERIOD', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'MIN_VOTING_PERIOD', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'correlationDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'createProposal', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'evidenceCommitment', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'expireProposal', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'finalizeProposal', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getActions', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getEligibleVoters', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'hasAction', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'incidentRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isEligibleVoter', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isVotingOpen', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'markVotingStarted', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'minimumConfidenceClass', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'nextProposalId', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'proposals', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'responseDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setMinimumConfidenceClass', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'setVotingContract', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'votingContract', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'votingStarted', data: BytesLike): Result;
   }
 
   
@@ -136,6 +148,18 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
 
   
 
+    export namespace VotingContractUpdatedEvent {
+      export type InputTuple = [votingContract: AddressLike];
+      export type OutputTuple = [votingContract: string];
+      export interface OutputObject {votingContract: string }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
   export interface ResponseProposal extends BaseContract {
     
     connect(runner?: ContractRunner | null): ResponseProposal;
@@ -170,6 +194,14 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
 
     
     
+    MAX_ACTIONS: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
     MAX_VOTING_PERIOD: TypedContractMethod<
       [],
       [bigint],
@@ -186,14 +218,6 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
     
 
     
-    admin: TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >
-    
-
-    
     correlationDecision: TypedContractMethod<
       [],
       [string],
@@ -203,7 +227,7 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
 
     
     createProposal: TypedContractMethod<
-      [incidentId: BytesLike, targetDomain: AddressLike, targetResourceId: BytesLike, actions: BigNumberish[], detailsHash: BytesLike, voters: AddressLike[], votingDuration: BigNumberish, ],
+      [incidentId: BytesLike, targetDomain: AddressLike, targetResourceId: BytesLike, actions: BigNumberish[], detailsHash: BytesLike, votingDuration: BigNumberish, ],
       [bigint],
       'nonpayable'
     >
@@ -211,6 +235,14 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
 
     
     domainRegistry: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
+    evidenceCommitment: TypedContractMethod<
       [],
       [string],
       'view'
@@ -250,6 +282,14 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
     
 
     
+    hasAction: TypedContractMethod<
+      [proposalId: BigNumberish, action: BigNumberish, ],
+      [boolean],
+      'view'
+    >
+    
+
+    
     incidentRegistry: TypedContractMethod<
       [],
       [string],
@@ -270,6 +310,14 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
       [proposalId: BigNumberish, ],
       [boolean],
       'view'
+    >
+    
+
+    
+    markVotingStarted: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
     >
     
 
@@ -321,10 +369,39 @@ decodeFunctionResult(functionFragment: 'setResponseDecision', data: BytesLike): 
     >
     
 
+    
+    setVotingContract: TypedContractMethod<
+      [_votingContract: AddressLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    votingContract: TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >
+    
+
+    
+    votingStarted: TypedContractMethod<
+      [arg0: BigNumberish, ],
+      [boolean],
+      'view'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'MAX_VOTING_PERIOD'): TypedContractMethod<
+    getFunction(nameOrSignature: 'MAX_ACTIONS'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'MAX_VOTING_PERIOD'): TypedContractMethod<
       [],
       [bigint],
       'view'
@@ -334,22 +411,22 @@ getFunction(nameOrSignature: 'MIN_VOTING_PERIOD'): TypedContractMethod<
       [bigint],
       'view'
     >;
-getFunction(nameOrSignature: 'admin'): TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >;
 getFunction(nameOrSignature: 'correlationDecision'): TypedContractMethod<
       [],
       [string],
       'view'
     >;
 getFunction(nameOrSignature: 'createProposal'): TypedContractMethod<
-      [incidentId: BytesLike, targetDomain: AddressLike, targetResourceId: BytesLike, actions: BigNumberish[], detailsHash: BytesLike, voters: AddressLike[], votingDuration: BigNumberish, ],
+      [incidentId: BytesLike, targetDomain: AddressLike, targetResourceId: BytesLike, actions: BigNumberish[], detailsHash: BytesLike, votingDuration: BigNumberish, ],
       [bigint],
       'nonpayable'
     >;
 getFunction(nameOrSignature: 'domainRegistry'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'evidenceCommitment'): TypedContractMethod<
       [],
       [string],
       'view'
@@ -374,6 +451,11 @@ getFunction(nameOrSignature: 'getEligibleVoters'): TypedContractMethod<
       [string[]],
       'view'
     >;
+getFunction(nameOrSignature: 'hasAction'): TypedContractMethod<
+      [proposalId: BigNumberish, action: BigNumberish, ],
+      [boolean],
+      'view'
+    >;
 getFunction(nameOrSignature: 'incidentRegistry'): TypedContractMethod<
       [],
       [string],
@@ -388,6 +470,11 @@ getFunction(nameOrSignature: 'isVotingOpen'): TypedContractMethod<
       [proposalId: BigNumberish, ],
       [boolean],
       'view'
+    >;
+getFunction(nameOrSignature: 'markVotingStarted'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
     >;
 getFunction(nameOrSignature: 'minimumConfidenceClass'): TypedContractMethod<
       [],
@@ -419,6 +506,21 @@ getFunction(nameOrSignature: 'setResponseDecision'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'setVotingContract'): TypedContractMethod<
+      [_votingContract: AddressLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'votingContract'): TypedContractMethod<
+      [],
+      [string],
+      'view'
+    >;
+getFunction(nameOrSignature: 'votingStarted'): TypedContractMethod<
+      [arg0: BigNumberish, ],
+      [boolean],
+      'view'
+    >;
 
     getEvent(key: 'EligibleVoterAdded'): TypedContractEvent<EligibleVoterAddedEvent.InputTuple, EligibleVoterAddedEvent.OutputTuple, EligibleVoterAddedEvent.OutputObject>;
 getEvent(key: 'MinimumConfidenceUpdated'): TypedContractEvent<MinimumConfidenceUpdatedEvent.InputTuple, MinimumConfidenceUpdatedEvent.OutputTuple, MinimumConfidenceUpdatedEvent.OutputObject>;
@@ -427,6 +529,7 @@ getEvent(key: 'ProposalCreated'): TypedContractEvent<ProposalCreatedEvent.InputT
 getEvent(key: 'ProposalExpired'): TypedContractEvent<ProposalExpiredEvent.InputTuple, ProposalExpiredEvent.OutputTuple, ProposalExpiredEvent.OutputObject>;
 getEvent(key: 'ProposalFinalized'): TypedContractEvent<ProposalFinalizedEvent.InputTuple, ProposalFinalizedEvent.OutputTuple, ProposalFinalizedEvent.OutputObject>;
 getEvent(key: 'ResponseDecisionUpdated'): TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
+getEvent(key: 'VotingContractUpdated'): TypedContractEvent<VotingContractUpdatedEvent.InputTuple, VotingContractUpdatedEvent.OutputTuple, VotingContractUpdatedEvent.OutputObject>;
 
     filters: {
       
@@ -456,6 +559,10 @@ getEvent(key: 'ResponseDecisionUpdated'): TypedContractEvent<ResponseDecisionUpd
 
       'ResponseDecisionUpdated(address)': TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
       ResponseDecisionUpdated: TypedContractEvent<ResponseDecisionUpdatedEvent.InputTuple, ResponseDecisionUpdatedEvent.OutputTuple, ResponseDecisionUpdatedEvent.OutputObject>;
+    
+
+      'VotingContractUpdated(address)': TypedContractEvent<VotingContractUpdatedEvent.InputTuple, VotingContractUpdatedEvent.OutputTuple, VotingContractUpdatedEvent.OutputObject>;
+      VotingContractUpdated: TypedContractEvent<VotingContractUpdatedEvent.InputTuple, VotingContractUpdatedEvent.OutputTuple, VotingContractUpdatedEvent.OutputObject>;
     
     };
   }

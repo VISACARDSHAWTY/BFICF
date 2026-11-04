@@ -14,37 +14,31 @@
         "type": "bytes32"
       }
     ],
-    "name": "correlations",
+    "name": "getAffectedDomains",
     "outputs": [
       {
-        "internalType": "bytes32",
-        "name": "resultHash",
-        "type": "bytes32"
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "bytes32",
-        "name": "algorithmVersionHash",
+        "name": "incidentId",
         "type": "bytes32"
-      },
+      }
+    ],
+    "name": "getConfidence",
+    "outputs": [
       {
         "internalType": "uint8",
-        "name": "confidence",
+        "name": "",
         "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "submittedBy",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "exists",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",

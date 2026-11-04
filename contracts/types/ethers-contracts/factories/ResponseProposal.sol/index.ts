@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { ICorrelationDecisionProposal__factory } from './ICorrelationDecisionProposal__factory.js';
+export { IEvidenceCommitmentProposal__factory } from './IEvidenceCommitmentProposal__factory.js';
 export { IIncidentRegistryProposal__factory } from './IIncidentRegistryProposal__factory.js';
 export { ResponseProposal__factory } from './ResponseProposal__factory.js';

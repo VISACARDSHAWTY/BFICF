@@ -4,17 +4,24 @@
 import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, ContractRunner, ContractMethod, Listener } from "ethers"
 import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common.js"
   
+export declare namespace IFederatedVotingDecision {
+      
+    export type VotingSessionStruct = {started: boolean, finalized: boolean, commitEnd: BigNumberish, revealEnd: BigNumberish, eligibleCount: BigNumberish, revealedCount: BigNumberish, quarantineThreshold: BigNumberish, revokeThreshold: BigNumberish, patchThreshold: BigNumberish, quorumBasisPoints: BigNumberish}
+
+    export type VotingSessionStructOutput = [started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }
+  
+    }
 
   export interface IFederatedVotingDecisionInterface extends Interface {
-    getFunction(nameOrSignature: "getVoteCount" | "getVotingData"): FunctionFragment;
+    getFunction(nameOrSignature: "getSession" | "getVoteCounts"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'getVoteCount', values: [BigNumberish, BigNumberish]): string;
-encodeFunctionData(functionFragment: 'getVotingData', values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: 'getSession', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'getVoteCounts', values: [BigNumberish]): string;
 
-    decodeFunctionResult(functionFragment: 'getVoteCount', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'getVotingData', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'getSession', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getVoteCounts', data: BytesLike): Result;
   }
 
   
@@ -53,17 +60,17 @@ decodeFunctionResult(functionFragment: 'getVotingData', data: BytesLike): Result
 
     
     
-    getVoteCount: TypedContractMethod<
-      [proposalId: BigNumberish, choice: BigNumberish, ],
-      [bigint],
+    getSession: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [IFederatedVotingDecision.VotingSessionStructOutput],
       'view'
     >
     
 
     
-    getVotingData: TypedContractMethod<
+    getVoteCounts: TypedContractMethod<
       [proposalId: BigNumberish, ],
-      [[boolean, boolean, bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }],
+      [[bigint, bigint, bigint, bigint, bigint]],
       'view'
     >
     
@@ -71,14 +78,14 @@ decodeFunctionResult(functionFragment: 'getVotingData', data: BytesLike): Result
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'getVoteCount'): TypedContractMethod<
-      [proposalId: BigNumberish, choice: BigNumberish, ],
-      [bigint],
+    getFunction(nameOrSignature: 'getSession'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [IFederatedVotingDecision.VotingSessionStructOutput],
       'view'
     >;
-getFunction(nameOrSignature: 'getVotingData'): TypedContractMethod<
+getFunction(nameOrSignature: 'getVoteCounts'): TypedContractMethod<
       [proposalId: BigNumberish, ],
-      [[boolean, boolean, bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }],
+      [[bigint, bigint, bigint, bigint, bigint]],
       'view'
     >;
 

@@ -6,13 +6,15 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IIncidentRegistryExecutionInterface extends Interface {
-    getFunction(nameOrSignature: "startExecution"): FunctionFragment;
+    getFunction(nameOrSignature: "escalateIncident" | "startExecution"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'startExecution', values: [BytesLike]): string;
+    encodeFunctionData(functionFragment: 'escalateIncident', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'startExecution', values: [BytesLike]): string;
 
-    decodeFunctionResult(functionFragment: 'startExecution', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'escalateIncident', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'startExecution', data: BytesLike): Result;
   }
 
   
@@ -51,6 +53,14 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
 
     
     
+    escalateIncident: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     startExecution: TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
@@ -61,7 +71,12 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'startExecution'): TypedContractMethod<
+    getFunction(nameOrSignature: 'escalateIncident'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [void],
+      'nonpayable'
+    >;
+getFunction(nameOrSignature: 'startExecution'): TypedContractMethod<
       [incidentId: BytesLike, ],
       [void],
       'nonpayable'

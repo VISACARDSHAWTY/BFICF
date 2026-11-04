@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { CorrelationDecision } from './CorrelationDecision.js';
+export type { IGovernanceParamsCorrelation } from './IGovernanceParamsCorrelation.js';
 export type { IIncidentRegistryCorrelation } from './IIncidentRegistryCorrelation.js';

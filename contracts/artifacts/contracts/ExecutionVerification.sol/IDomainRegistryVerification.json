@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IDomainRegistryVerification",
+  "sourceName": "contracts/ExecutionVerification.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "domain",
+          "type": "address"
+        }
+      ],
+      "name": "isActiveDomain",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "isSecurityAuthority",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/ExecutionVerification.sol",
+  "buildInfoId": "solc-0_8_38-cd7bd9e6dc651c141cc37f043854cec8187b43d7"
+}

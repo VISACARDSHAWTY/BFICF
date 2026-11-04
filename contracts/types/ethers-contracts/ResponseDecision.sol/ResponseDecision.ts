@@ -13,20 +13,18 @@ export declare namespace ResponseDecision {
     }
 
   export interface ResponseDecisionInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "decisions" | "federatedVoting" | "finalizeDecision" | "getDecision" | "incidentRegistry" | "responseProposal"): FunctionFragment;
+    getFunction(nameOrSignature: "decisions" | "federatedVoting" | "finalizeDecision" | "getDecision" | "incidentRegistry" | "responseProposal"): FunctionFragment;
 
     getEvent(nameOrSignatureOrTopic: "DecisionFinalized"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-encodeFunctionData(functionFragment: 'decisions', values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: 'decisions', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'federatedVoting', values?: undefined): string;
 encodeFunctionData(functionFragment: 'finalizeDecision', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'getDecision', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'incidentRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'responseProposal', values?: undefined): string;
 
-    decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'decisions', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'decisions', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'federatedVoting', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'finalizeDecision', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getDecision', data: BytesLike): Result;
@@ -36,9 +34,9 @@ decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Res
 
   
     export namespace DecisionFinalizedEvent {
-      export type InputTuple = [proposalId: BigNumberish, incidentId: BytesLike, outcome: BigNumberish, validVotes: BigNumberish, eligibleVoters: BigNumberish, quorumReached: boolean];
-      export type OutputTuple = [proposalId: bigint, incidentId: string, outcome: bigint, validVotes: bigint, eligibleVoters: bigint, quorumReached: boolean];
-      export interface OutputObject {proposalId: bigint, incidentId: string, outcome: bigint, validVotes: bigint, eligibleVoters: bigint, quorumReached: boolean }
+      export type InputTuple = [proposalId: BigNumberish, incidentId: BytesLike, outcome: BigNumberish, validVotes: BigNumberish, eligibleVoters: BigNumberish, quorumReached: boolean, tally: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish]];
+      export type OutputTuple = [proposalId: bigint, incidentId: string, outcome: bigint, validVotes: bigint, eligibleVoters: bigint, quorumReached: boolean, tally: [bigint, bigint, bigint, bigint, bigint]];
+      export interface OutputObject {proposalId: bigint, incidentId: string, outcome: bigint, validVotes: bigint, eligibleVoters: bigint, quorumReached: boolean, tally: [bigint, bigint, bigint, bigint, bigint] }
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -80,14 +78,6 @@ decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Res
 
 
     
-    
-    admin: TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >
-    
-
     
     decisions: TypedContractMethod<
       [arg0: BigNumberish, ],
@@ -139,12 +129,7 @@ decodeFunctionResult(functionFragment: 'responseProposal', data: BytesLike): Res
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'admin'): TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'decisions'): TypedContractMethod<
+    getFunction(nameOrSignature: 'decisions'): TypedContractMethod<
       [arg0: BigNumberish, ],
       [[bigint, bigint, bigint, boolean, bigint, boolean] & {outcome: bigint, validVotes: bigint, eligibleVoters: bigint, quorumReached: boolean, timestamp: bigint, finalized: boolean }],
       'view'
@@ -179,7 +164,7 @@ getFunction(nameOrSignature: 'responseProposal'): TypedContractMethod<
 
     filters: {
       
-      'DecisionFinalized(uint256,bytes32,uint8,uint256,uint256,bool)': TypedContractEvent<DecisionFinalizedEvent.InputTuple, DecisionFinalizedEvent.OutputTuple, DecisionFinalizedEvent.OutputObject>;
+      'DecisionFinalized(uint256,bytes32,uint8,uint256,uint256,bool,uint256[5])': TypedContractEvent<DecisionFinalizedEvent.InputTuple, DecisionFinalizedEvent.OutputTuple, DecisionFinalizedEvent.OutputObject>;
       DecisionFinalized: TypedContractEvent<DecisionFinalizedEvent.InputTuple, DecisionFinalizedEvent.OutputTuple, DecisionFinalizedEvent.OutputObject>;
     
     };

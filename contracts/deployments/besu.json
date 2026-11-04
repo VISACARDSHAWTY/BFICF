@@ -1,0 +1,73 @@
+{
+  "network": "besu",
+  "chainId": "20260",
+  "rpcUrl": "http://127.0.0.1:8549",
+  "deployedAt": "2026-11-04T20:42:49.920Z",
+  "accounts": {
+    "secauth": "0xc2d1EfA9C9c56D42d5effd5D809d03c6Fb84690E",
+    "oem": "0xA682AC6bc7027C5415b4e0A37703568B1E525581",
+    "cloud": "0x97d7342dD13346627D3b40190De958cbA0c9F600",
+    "edge": "0x98a520A0BABD605FF5c7bd769e19954d0A5d74d5",
+    "user": "0xd1cd718a27630cc30ceba42eb1AbE17F30eD59d5",
+    "correlator": "0xc2d1EfA9C9c56D42d5effd5D809d03c6Fb84690E",
+    "recoveryVerifier": "0xc2d1EfA9C9c56D42d5effd5D809d03c6Fb84690E"
+  },
+  "contracts": {
+    "DomainRegistry": "0x0820cB76bad4f650d6938b31d0408c55276c6038",
+    "GovernanceParams": "0x44666E12279D8Bed5F8A8a09FEFf43049d690Ad1",
+    "IncidentRegistry": "0x108ed7Ffd2D636aD8AEA9bc725FB6fc36158Ff3a",
+    "EvidenceCommitment": "0x20b65EDc4fC5C2F1c3C99A26A74253fa822F930D",
+    "CorrelationDecision": "0x7cb7BF4969F8Bdb40602958dF7a8E242114D7BA1",
+    "ResponseProposal": "0xb4BA0CE37c1d75F3130110C350890DA32Ef6fde4",
+    "FederatedVoting": "0x49f4716C2c2645469223C6c0d2b853676f687998",
+    "ResponseDecision": "0x754611E878784155b825EBe1821D0D2f0E214b78",
+    "ResponseExecution": "0x19b883e7F48e8Bc4D94d1BE82956977339677D13",
+    "ExecutionVerification": "0x5327DcFa2670D6fA92B802b4Ff478A23488BBD5B",
+    "DeviceRegistry": "0x02d60C7bA25Ab69c34Bb4C20680dCCF695b9694f",
+    "DeviceRecovery": "0x4a21cd731Fc88B735dc43899E8fA66D84232858f"
+  },
+  "governance": {
+    "quarantineBps": 6000,
+    "revokeBps": 6000,
+    "patchBps": 5000,
+    "quorumBps": 5000,
+    "correlationQuorumBps": 5000,
+    "commitWindowSec": 60,
+    "revealWindowSec": 60
+  },
+  "gasUsed": {
+    "total": "17210533",
+    "perStep": {
+      "deploy:DomainRegistry": "1351135",
+      "deploy:GovernanceParams": "606142",
+      "deploy:IncidentRegistry": "1479173",
+      "deploy:EvidenceCommitment": "426327",
+      "deploy:CorrelationDecision": "1383992",
+      "deploy:ResponseProposal": "2125328",
+      "deploy:FederatedVoting": "1678932",
+      "deploy:ResponseDecision": "954326",
+      "deploy:ResponseExecution": "1812654",
+      "deploy:ExecutionVerification": "761253",
+      "deploy:DeviceRegistry": "1512444",
+      "deploy:DeviceRecovery": "1671357",
+      "wire:incident.workflow": "69570",
+      "wire:incident.governance": "69570",
+      "wire:incident.execution": "69537",
+      "wire:proposal.decision": "32103",
+      "wire:proposal.voting": "47108",
+      "wire:voting.decision": "47045",
+      "wire:execution.verifier": "47250",
+      "wire:device.recovery": "47569",
+      "wire:device.governance": "68724",
+      "domain:OEM": "161771",
+      "domain:Cloud": "161819",
+      "domain:Edge": "161807",
+      "domain:User": "161807",
+      "domain:SECAUTH": "161879",
+      "setCorrelator": "48737",
+      "gov:thresholds": "29815",
+      "gov:windows": "35519",
+      "gov:corrQuorum": "25840"
+    }
+  }
+}

@@ -1,0 +1,219 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_federatedVoting",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_responseProposal",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_incidentRegistry",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "incidentId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum ResponseDecision.DecisionOutcome",
+        "name": "outcome",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "validVotes",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eligibleVoters",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "quorumReached",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[5]",
+        "name": "tally",
+        "type": "uint256[5]"
+      }
+    ],
+    "name": "DecisionFinalized",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "decisions",
+    "outputs": [
+      {
+        "internalType": "enum ResponseDecision.DecisionOutcome",
+        "name": "outcome",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "validVotes",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "eligibleVoters",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "quorumReached",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "finalized",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "federatedVoting",
+    "outputs": [
+      {
+        "internalType": "contract IFederatedVotingDecision",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      }
+    ],
+    "name": "finalizeDecision",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getDecision",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "enum ResponseDecision.DecisionOutcome",
+            "name": "outcome",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "validVotes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "eligibleVoters",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "quorumReached",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "finalized",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ResponseDecision.Decision",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "incidentRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IIncidentRegistryDecision",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "responseProposal",
+    "outputs": [
+      {
+        "internalType": "contract IResponseProposalDecision",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

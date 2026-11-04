@@ -6,15 +6,17 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface ICorrelationDecisionProposalInterface extends Interface {
-    getFunction(nameOrSignature: "correlations" | "hasCorrelation" | "isAffectedDomain"): FunctionFragment;
+    getFunction(nameOrSignature: "getAffectedDomains" | "getConfidence" | "hasCorrelation" | "isAffectedDomain"): FunctionFragment;
 
     
 
-    encodeFunctionData(functionFragment: 'correlations', values: [BytesLike]): string;
+    encodeFunctionData(functionFragment: 'getAffectedDomains', values: [BytesLike]): string;
+encodeFunctionData(functionFragment: 'getConfidence', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'hasCorrelation', values: [BytesLike]): string;
 encodeFunctionData(functionFragment: 'isAffectedDomain', values: [BytesLike, AddressLike]): string;
 
-    decodeFunctionResult(functionFragment: 'correlations', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'getAffectedDomains', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getConfidence', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'hasCorrelation', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isAffectedDomain', data: BytesLike): Result;
   }
@@ -55,9 +57,17 @@ decodeFunctionResult(functionFragment: 'isAffectedDomain', data: BytesLike): Res
 
     
     
-    correlations: TypedContractMethod<
+    getAffectedDomains: TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, string, bigint, bigint, string, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, timestamp: bigint, submittedBy: string, exists: boolean }],
+      [string[]],
+      'view'
+    >
+    
+
+    
+    getConfidence: TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
       'view'
     >
     
@@ -81,9 +91,14 @@ decodeFunctionResult(functionFragment: 'isAffectedDomain', data: BytesLike): Res
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'correlations'): TypedContractMethod<
+    getFunction(nameOrSignature: 'getAffectedDomains'): TypedContractMethod<
       [incidentId: BytesLike, ],
-      [[string, string, bigint, bigint, string, boolean] & {resultHash: string, algorithmVersionHash: string, confidence: bigint, timestamp: bigint, submittedBy: string, exists: boolean }],
+      [string[]],
+      'view'
+    >;
+getFunction(nameOrSignature: 'getConfidence'): TypedContractMethod<
+      [incidentId: BytesLike, ],
+      [bigint],
       'view'
     >;
 getFunction(nameOrSignature: 'hasCorrelation'): TypedContractMethod<

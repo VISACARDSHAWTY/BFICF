@@ -6,32 +6,48 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface GovernanceParamsInterface extends Interface {
-    getFunction(nameOrSignature: "commitWindow" | "domainRegistry" | "patchThreshold" | "quarantineThreshold" | "quorumBasisPoints" | "revealWindow" | "revokeThreshold" | "updateThresholds" | "updateWindows"): FunctionFragment;
+    getFunction(nameOrSignature: "commitWindow" | "correlationQuorumBps" | "domainRegistry" | "patchThreshold" | "quarantineThreshold" | "quorumBasisPoints" | "revealWindow" | "revokeThreshold" | "updateCorrelationQuorum" | "updateThresholds" | "updateWindows"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "ThresholdsUpdated" | "WindowsUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "CorrelationQuorumUpdated" | "ThresholdsUpdated" | "WindowsUpdated"): EventFragment;
 
     encodeFunctionData(functionFragment: 'commitWindow', values?: undefined): string;
+encodeFunctionData(functionFragment: 'correlationQuorumBps', values?: undefined): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'patchThreshold', values?: undefined): string;
 encodeFunctionData(functionFragment: 'quarantineThreshold', values?: undefined): string;
 encodeFunctionData(functionFragment: 'quorumBasisPoints', values?: undefined): string;
 encodeFunctionData(functionFragment: 'revealWindow', values?: undefined): string;
 encodeFunctionData(functionFragment: 'revokeThreshold', values?: undefined): string;
+encodeFunctionData(functionFragment: 'updateCorrelationQuorum', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'updateThresholds', values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]): string;
 encodeFunctionData(functionFragment: 'updateWindows', values: [BigNumberish, BigNumberish]): string;
 
     decodeFunctionResult(functionFragment: 'commitWindow', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'correlationQuorumBps', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'patchThreshold', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'quarantineThreshold', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'quorumBasisPoints', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'revealWindow', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'revokeThreshold', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'updateCorrelationQuorum', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'updateThresholds', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'updateWindows', data: BytesLike): Result;
   }
 
   
+    export namespace CorrelationQuorumUpdatedEvent {
+      export type InputTuple = [bps: BigNumberish];
+      export type OutputTuple = [bps: bigint];
+      export interface OutputObject {bps: bigint }
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
     export namespace ThresholdsUpdatedEvent {
       export type InputTuple = [q: BigNumberish, r: BigNumberish, p: BigNumberish, quorum: BigNumberish];
       export type OutputTuple = [q: bigint, r: bigint, p: bigint, quorum: bigint];
@@ -98,6 +114,14 @@ decodeFunctionResult(functionFragment: 'updateWindows', data: BytesLike): Result
     
 
     
+    correlationQuorumBps: TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >
+    
+
+    
     domainRegistry: TypedContractMethod<
       [],
       [string],
@@ -146,6 +170,14 @@ decodeFunctionResult(functionFragment: 'updateWindows', data: BytesLike): Result
     
 
     
+    updateCorrelationQuorum: TypedContractMethod<
+      [bps: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     updateThresholds: TypedContractMethod<
       [_quarantine: BigNumberish, _revoke: BigNumberish, _patch: BigNumberish, _quorum: BigNumberish, ],
       [void],
@@ -165,6 +197,11 @@ decodeFunctionResult(functionFragment: 'updateWindows', data: BytesLike): Result
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
     getFunction(nameOrSignature: 'commitWindow'): TypedContractMethod<
+      [],
+      [bigint],
+      'view'
+    >;
+getFunction(nameOrSignature: 'correlationQuorumBps'): TypedContractMethod<
       [],
       [bigint],
       'view'
@@ -199,6 +236,11 @@ getFunction(nameOrSignature: 'revokeThreshold'): TypedContractMethod<
       [bigint],
       'view'
     >;
+getFunction(nameOrSignature: 'updateCorrelationQuorum'): TypedContractMethod<
+      [bps: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'updateThresholds'): TypedContractMethod<
       [_quarantine: BigNumberish, _revoke: BigNumberish, _patch: BigNumberish, _quorum: BigNumberish, ],
       [void],
@@ -210,11 +252,16 @@ getFunction(nameOrSignature: 'updateWindows'): TypedContractMethod<
       'nonpayable'
     >;
 
-    getEvent(key: 'ThresholdsUpdated'): TypedContractEvent<ThresholdsUpdatedEvent.InputTuple, ThresholdsUpdatedEvent.OutputTuple, ThresholdsUpdatedEvent.OutputObject>;
+    getEvent(key: 'CorrelationQuorumUpdated'): TypedContractEvent<CorrelationQuorumUpdatedEvent.InputTuple, CorrelationQuorumUpdatedEvent.OutputTuple, CorrelationQuorumUpdatedEvent.OutputObject>;
+getEvent(key: 'ThresholdsUpdated'): TypedContractEvent<ThresholdsUpdatedEvent.InputTuple, ThresholdsUpdatedEvent.OutputTuple, ThresholdsUpdatedEvent.OutputObject>;
 getEvent(key: 'WindowsUpdated'): TypedContractEvent<WindowsUpdatedEvent.InputTuple, WindowsUpdatedEvent.OutputTuple, WindowsUpdatedEvent.OutputObject>;
 
     filters: {
       
+      'CorrelationQuorumUpdated(uint256)': TypedContractEvent<CorrelationQuorumUpdatedEvent.InputTuple, CorrelationQuorumUpdatedEvent.OutputTuple, CorrelationQuorumUpdatedEvent.OutputObject>;
+      CorrelationQuorumUpdated: TypedContractEvent<CorrelationQuorumUpdatedEvent.InputTuple, CorrelationQuorumUpdatedEvent.OutputTuple, CorrelationQuorumUpdatedEvent.OutputObject>;
+    
+
       'ThresholdsUpdated(uint256,uint256,uint256,uint256)': TypedContractEvent<ThresholdsUpdatedEvent.InputTuple, ThresholdsUpdatedEvent.OutputTuple, ThresholdsUpdatedEvent.OutputObject>;
       ThresholdsUpdated: TypedContractEvent<ThresholdsUpdatedEvent.InputTuple, ThresholdsUpdatedEvent.OutputTuple, ThresholdsUpdatedEvent.OutputObject>;
     

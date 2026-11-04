@@ -1,0 +1,58 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IResponseDecisionDevice",
+  "sourceName": "contracts/DeviceRegistry.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalId",
+          "type": "uint256"
+        }
+      ],
+      "name": "decisions",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "outcome",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "validVotes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "eligibleVoters",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "quorumReached",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "finalized",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/DeviceRegistry.sol",
+  "buildInfoId": "solc-0_8_38-cd7bd9e6dc651c141cc37f043854cec8187b43d7"
+}

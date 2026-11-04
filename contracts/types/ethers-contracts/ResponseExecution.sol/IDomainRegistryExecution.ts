@@ -6,13 +6,15 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IDomainRegistryExecutionInterface extends Interface {
-    getFunction(nameOrSignature: "isActiveDomain"): FunctionFragment;
+    getFunction(nameOrSignature: "isActiveDomain" | "isSecurityAuthority"): FunctionFragment;
 
     
 
     encodeFunctionData(functionFragment: 'isActiveDomain', values: [AddressLike]): string;
+encodeFunctionData(functionFragment: 'isSecurityAuthority', values: [AddressLike]): string;
 
     decodeFunctionResult(functionFragment: 'isActiveDomain', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'isSecurityAuthority', data: BytesLike): Result;
   }
 
   
@@ -58,11 +60,24 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
     >
     
 
+    
+    isSecurityAuthority: TypedContractMethod<
+      [account: AddressLike, ],
+      [boolean],
+      'view'
+    >
+    
+
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
     getFunction(nameOrSignature: 'isActiveDomain'): TypedContractMethod<
       [domain: AddressLike, ],
+      [boolean],
+      'view'
+    >;
+getFunction(nameOrSignature: 'isSecurityAuthority'): TypedContractMethod<
+      [account: AddressLike, ],
       [boolean],
       'view'
     >;

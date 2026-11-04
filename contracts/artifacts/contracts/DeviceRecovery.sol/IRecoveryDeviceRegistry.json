@@ -1,0 +1,88 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IRecoveryDeviceRegistry",
+  "sourceName": "contracts/DeviceRecovery.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "deviceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "successful",
+          "type": "bool"
+        }
+      ],
+      "name": "finalizeRecovery",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "deviceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "domain",
+          "type": "address"
+        }
+      ],
+      "name": "isDeviceOwner",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "deviceId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "isDeviceQuarantined",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "deviceId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "startRecovery",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/DeviceRecovery.sol",
+  "buildInfoId": "solc-0_8_38-cd7bd9e6dc651c141cc37f043854cec8187b43d7"
+}

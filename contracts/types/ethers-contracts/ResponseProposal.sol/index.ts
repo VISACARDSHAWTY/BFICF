@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ICorrelationDecisionProposal } from './ICorrelationDecisionProposal.js';
+export type { IEvidenceCommitmentProposal } from './IEvidenceCommitmentProposal.js';
 export type { IIncidentRegistryProposal } from './IIncidentRegistryProposal.js';
 export type { ResponseProposal } from './ResponseProposal.js';

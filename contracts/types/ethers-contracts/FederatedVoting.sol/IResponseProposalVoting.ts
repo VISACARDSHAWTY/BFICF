@@ -6,16 +6,18 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface IResponseProposalVotingInterface extends Interface {
-    getFunction(nameOrSignature: "getEligibleVoters" | "isEligibleVoter" | "proposals"): FunctionFragment;
+    getFunction(nameOrSignature: "getEligibleVoters" | "isEligibleVoter" | "markVotingStarted" | "proposals"): FunctionFragment;
 
     
 
     encodeFunctionData(functionFragment: 'getEligibleVoters', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'isEligibleVoter', values: [BigNumberish, AddressLike]): string;
+encodeFunctionData(functionFragment: 'markVotingStarted', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'proposals', values: [BigNumberish]): string;
 
     decodeFunctionResult(functionFragment: 'getEligibleVoters', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isEligibleVoter', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'markVotingStarted', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'proposals', data: BytesLike): Result;
   }
 
@@ -71,6 +73,14 @@ decodeFunctionResult(functionFragment: 'proposals', data: BytesLike): Result;
     
 
     
+    markVotingStarted: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
     proposals: TypedContractMethod<
       [proposalId: BigNumberish, ],
       [[string, string, string, string, string, bigint, bigint, bigint] & {incidentId: string, proposer: string, targetDomain: string, targetResourceId: string, detailsHash: string, createdAt: bigint, votingDeadline: bigint, status: bigint }],
@@ -90,6 +100,11 @@ getFunction(nameOrSignature: 'isEligibleVoter'): TypedContractMethod<
       [proposalId: BigNumberish, voter: AddressLike, ],
       [boolean],
       'view'
+    >;
+getFunction(nameOrSignature: 'markVotingStarted'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [void],
+      'nonpayable'
     >;
 getFunction(nameOrSignature: 'proposals'): TypedContractMethod<
       [proposalId: BigNumberish, ],

@@ -4,19 +4,26 @@
 import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers"
 import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "../common.js"
   
+export declare namespace FederatedVoting {
+      
+    export type VotingSessionStruct = {started: boolean, finalized: boolean, commitEnd: BigNumberish, revealEnd: BigNumberish, eligibleCount: BigNumberish, revealedCount: BigNumberish, quarantineThreshold: BigNumberish, revokeThreshold: BigNumberish, patchThreshold: BigNumberish, quorumBasisPoints: BigNumberish}
+
+    export type VotingSessionStructOutput = [started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }
+  
+    }
 
   export interface FederatedVotingInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "commitVote" | "computeCommitment" | "domainRegistry" | "finalizeVoting" | "getVoteCount" | "getVotingData" | "governanceParams" | "hasCommitted" | "hasRevealed" | "incidentRegistry" | "responseDecision" | "responseProposal" | "revealVote" | "sessions" | "setResponseDecision" | "startVoting" | "voteCommitments"): FunctionFragment;
+    getFunction(nameOrSignature: "commitVote" | "computeCommitment" | "domainRegistry" | "finalizeVoting" | "getSession" | "getVoteCount" | "getVoteCounts" | "governanceParams" | "hasCommitted" | "hasRevealed" | "incidentRegistry" | "responseDecision" | "responseProposal" | "revealVote" | "sessions" | "setResponseDecision" | "startVoting" | "voteCommitments"): FunctionFragment;
 
     getEvent(nameOrSignatureOrTopic: "ResponseDecisionUpdated" | "VoteCommitted" | "VoteRevealed" | "VotingFinalized" | "VotingStarted"): EventFragment;
 
-    encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-encodeFunctionData(functionFragment: 'commitVote', values: [BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: 'commitVote', values: [BigNumberish, BytesLike]): string;
 encodeFunctionData(functionFragment: 'computeCommitment', values: [BigNumberish, AddressLike, BigNumberish, BytesLike]): string;
 encodeFunctionData(functionFragment: 'domainRegistry', values?: undefined): string;
 encodeFunctionData(functionFragment: 'finalizeVoting', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'getSession', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'getVoteCount', values: [BigNumberish, BigNumberish]): string;
-encodeFunctionData(functionFragment: 'getVotingData', values: [BigNumberish]): string;
+encodeFunctionData(functionFragment: 'getVoteCounts', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'governanceParams', values?: undefined): string;
 encodeFunctionData(functionFragment: 'hasCommitted', values: [BigNumberish, AddressLike]): string;
 encodeFunctionData(functionFragment: 'hasRevealed', values: [BigNumberish, AddressLike]): string;
@@ -29,13 +36,13 @@ encodeFunctionData(functionFragment: 'setResponseDecision', values: [AddressLike
 encodeFunctionData(functionFragment: 'startVoting', values: [BigNumberish]): string;
 encodeFunctionData(functionFragment: 'voteCommitments', values: [BigNumberish, AddressLike]): string;
 
-    decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'commitVote', data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: 'commitVote', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'computeCommitment', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'domainRegistry', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'finalizeVoting', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getSession', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'getVoteCount', data: BytesLike): Result;
-decodeFunctionResult(functionFragment: 'getVotingData', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'getVoteCounts', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'governanceParams', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'hasCommitted', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'hasRevealed', data: BytesLike): Result;
@@ -144,14 +151,6 @@ decodeFunctionResult(functionFragment: 'voteCommitments', data: BytesLike): Resu
 
     
     
-    admin: TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >
-    
-
-    
     commitVote: TypedContractMethod<
       [proposalId: BigNumberish, commitment: BytesLike, ],
       [void],
@@ -184,6 +183,14 @@ decodeFunctionResult(functionFragment: 'voteCommitments', data: BytesLike): Resu
     
 
     
+    getSession: TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [FederatedVoting.VotingSessionStructOutput],
+      'view'
+    >
+    
+
+    
     getVoteCount: TypedContractMethod<
       [proposalId: BigNumberish, choice: BigNumberish, ],
       [bigint],
@@ -192,9 +199,9 @@ decodeFunctionResult(functionFragment: 'voteCommitments', data: BytesLike): Resu
     
 
     
-    getVotingData: TypedContractMethod<
+    getVoteCounts: TypedContractMethod<
       [proposalId: BigNumberish, ],
-      [[boolean, boolean, bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }],
+      [[bigint, bigint, bigint, bigint, bigint]],
       'view'
     >
     
@@ -290,12 +297,7 @@ decodeFunctionResult(functionFragment: 'voteCommitments', data: BytesLike): Resu
 
     getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
 
-    getFunction(nameOrSignature: 'admin'): TypedContractMethod<
-      [],
-      [string],
-      'view'
-    >;
-getFunction(nameOrSignature: 'commitVote'): TypedContractMethod<
+    getFunction(nameOrSignature: 'commitVote'): TypedContractMethod<
       [proposalId: BigNumberish, commitment: BytesLike, ],
       [void],
       'nonpayable'
@@ -315,14 +317,19 @@ getFunction(nameOrSignature: 'finalizeVoting'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'getSession'): TypedContractMethod<
+      [proposalId: BigNumberish, ],
+      [FederatedVoting.VotingSessionStructOutput],
+      'view'
+    >;
 getFunction(nameOrSignature: 'getVoteCount'): TypedContractMethod<
       [proposalId: BigNumberish, choice: BigNumberish, ],
       [bigint],
       'view'
     >;
-getFunction(nameOrSignature: 'getVotingData'): TypedContractMethod<
+getFunction(nameOrSignature: 'getVoteCounts'): TypedContractMethod<
       [proposalId: BigNumberish, ],
-      [[boolean, boolean, bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint] & {started: boolean, finalized: boolean, commitEnd: bigint, revealEnd: bigint, eligibleCount: bigint, revealedCount: bigint, quarantineThreshold: bigint, revokeThreshold: bigint, patchThreshold: bigint, quorumBasisPoints: bigint }],
+      [[bigint, bigint, bigint, bigint, bigint]],
       'view'
     >;
 getFunction(nameOrSignature: 'governanceParams'): TypedContractMethod<

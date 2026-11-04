@@ -1,0 +1,27 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IGovernanceParamsCorrelation",
+  "sourceName": "contracts/CorrelationDecision.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "correlationQuorumBps",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/CorrelationDecision.sol",
+  "buildInfoId": "solc-0_8_38-cd7bd9e6dc651c141cc37f043854cec8187b43d7"
+}
