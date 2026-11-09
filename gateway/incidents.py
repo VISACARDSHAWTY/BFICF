@@ -51,7 +51,10 @@ def register_incident(
         detected_at
     )
 
-    result = TransactionManager(client).send(transaction)
+    result = TransactionManager(client).send(
+        transaction,
+        idempotency_key=f"incident-register:{incident_id}"
+    )
 
     return {
         "incident_id": incident_id,

@@ -27,7 +27,10 @@ def commit_evidence(client, incident_id, evidence):
         evidence_hash
     )
 
-    result = TransactionManager(client).send(transaction)
+    result = TransactionManager(client).send(
+        transaction,
+        idempotency_key=f"evidence-commit:{incident_id}:{evidence_hash.hex()}"
+    )
 
     return {
         "incident_id": incident_id,

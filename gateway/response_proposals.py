@@ -88,7 +88,14 @@ def create_response_proposal(
         voting_duration
     )
 
-    result = TransactionManager(client).send(transaction)
+    result = TransactionManager(client).send(
+        transaction,
+        idempotency_key=(
+            f"proposal-create:{incident_id}:"
+            f"{target_domain}:{target_resource_hash.hex()}:"
+            f"{details_hash.hex()}"
+        )
+    )
 
     return {
         "proposal_id": proposal_id,

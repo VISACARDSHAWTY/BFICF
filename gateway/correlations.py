@@ -52,7 +52,10 @@ def submit_correlation(
         algorithm_hash
     )
 
-    result = TransactionManager(client).send(transaction)
+    result = TransactionManager(client).send(
+        transaction,
+        idempotency_key=f"correlation-submit:{incident_id}:{result_hash.hex()}"
+    )
 
     return {
         "incident_id": incident_id,
@@ -78,4 +81,7 @@ def attest_correlation(client, incident_id, result_hash):
         result_hash_bytes
     )
 
-    return TransactionManager(client).send(transaction)
+    return TransactionManager(client).send(
+        transaction,
+        idempotency_key=f"correlation-attest:{incident_id}:{result_hash_bytes.hex()}"
+    )

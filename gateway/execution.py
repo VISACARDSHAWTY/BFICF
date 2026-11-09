@@ -151,7 +151,8 @@ def create_execution_plan(client, proposal_id, actions):
         raise ValueError("Current account is not authorised to create this plan")
 
     result = TransactionManager(client).send(
-        execution_contract.functions.createExecutionPlan(proposal_id, inputs)
+        execution_contract.functions.createExecutionPlan(proposal_id, inputs),
+        idempotency_key=f"execution-plan:{proposal_id}"
     )
 
     action_ids = execution_contract.functions.getProposalActionIds(
@@ -220,7 +221,8 @@ def report_execution(client, action_id, receipt):
     receipt_hash = _hash_value(receipt)
 
     result = TransactionManager(client).send(
-        contract.functions.reportExecution(action_id, receipt_hash)
+        contract.functions.reportExecution(action_id, receipt_hash),
+        idempotency_key=f"execution-receipt:{action_id}:{receipt_hash.hex()}"
     )
 
     return {
@@ -249,7 +251,8 @@ def attest_action(client, action_id, valid=True):
         raise ValueError("Current account is not an active domain")
 
     result = TransactionManager(client).send(
-        verification.functions.attestAction(action_id, bool(valid))
+        verification.functions.attestAction(action_id, bool(valid)),
+        idempotency_key=f"execution-attestation:{action_id}:{client.address.lower()}"
     )
 
     updated_action = get_execution_action(client, action_id)
@@ -292,7 +295,8 @@ def escalate_stalled_execution(client, proposal_id):
     execution = client.get_contract("ResponseExecution")
 
     result = TransactionManager(client).send(
-        execution.functions.escalateStalled(proposal_id)
+        execution.functions.escalateStalled(proposal_id),
+        idempotency_key=f"execution-escalation:{proposal_id}"
     )
 
     return {

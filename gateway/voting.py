@@ -3,6 +3,8 @@ import secrets
 from web3 import Web3
 from gateway.transactions import TransactionManager
 
+import sqlite3
+from pathlib import Path
 
 VOTE_CHOICES = {
     "QUARANTINE": 0,
@@ -45,7 +47,64 @@ def _normalize_salt(salt):
 
     return salt
 
+def _load_or_create_vote_salt(client, proposal_id, choice_value, supplied_salt=None):
+    db_path = Path(__file__).resolve().parent.parent / "data" / "vote_salts.sqlite3"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
 
+    chain_id = client.w3.eth.chain_id
+    voter = client.address.lower()
+
+    with sqlite3.connect(db_path, timeout=30) as db:
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS vote_salts (
+                chain_id INTEGER NOT NULL,
+                proposal_id INTEGER NOT NULL,
+                voter TEXT NOT NULL,
+                choice INTEGER NOT NULL,
+                salt BLOB NOT NULL,
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (chain_id, proposal_id, voter)
+            )
+        """)
+
+        db.execute("BEGIN IMMEDIATE")
+
+        row = db.execute("""
+            SELECT choice, salt
+            FROM vote_salts
+            WHERE chain_id = ? AND proposal_id = ? AND voter = ?
+        """, (chain_id, proposal_id, voter)).fetchone()
+
+        if row:
+            stored_choice, stored_salt = row
+
+            if stored_choice != choice_value:
+                raise ValueError(
+                    "A vote salt already exists for this proposal and account "
+                    "with a different choice"
+                )
+
+            stored_salt = bytes(stored_salt)
+
+            if supplied_salt is not None and supplied_salt != stored_salt:
+                raise ValueError("Supplied salt does not match the stored vote salt")
+
+            db.commit()
+            return stored_salt
+
+        salt = supplied_salt or secrets.token_bytes(32)
+
+        db.execute("""
+            INSERT INTO vote_salts (
+                chain_id, proposal_id, voter, choice, salt
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (chain_id, proposal_id, voter, choice_value, salt))
+
+        db.commit()
+        return salt
+    
+    
 def start_voting(client, proposal_id):
     voting, proposal = _get_contracts(client)
 
@@ -60,7 +119,8 @@ def start_voting(client, proposal_id):
         return {"proposal_id": proposal_id, "status": "ALREADY_STARTED"}
 
     result = TransactionManager(client).send(
-        voting.functions.startVoting(proposal_id)
+        voting.functions.startVoting(proposal_id),
+        idempotency_key=f"voting-start:{proposal_id}"
     )
 
     return {
@@ -88,15 +148,14 @@ def commit_vote(client, proposal_id, choice, salt=None):
     if session[1]:
         raise ValueError("Voting has already been finalized")
 
-    if voting.functions.hasCommitted(
-        proposal_id, client.address
-    ).call():
-        raise ValueError("This account has already committed a vote")
+    supplied_salt = _normalize_salt(salt) if salt is not None else None
 
-    if salt is None:
-        salt = secrets.token_bytes(32)
-    else:
-        salt = _normalize_salt(salt)
+    salt = _load_or_create_vote_salt(
+        client,
+        proposal_id,
+        choice_value,
+        supplied_salt
+    )
 
     commitment = voting.functions.computeCommitment(
         proposal_id,
@@ -105,8 +164,30 @@ def commit_vote(client, proposal_id, choice, salt=None):
         salt
     ).call()
 
+    if voting.functions.hasCommitted(
+        proposal_id, client.address
+    ).call():
+        stored = voting.functions.voteCommitments(
+            proposal_id, client.address
+        ).call()
+
+        if stored != commitment:
+            raise ValueError(
+                "An existing vote commitment does not match the locally stored vote"
+            )
+
+        return {
+            "proposal_id": proposal_id,
+            "voter": client.address,
+            "choice": list(VOTE_CHOICES.keys())[choice_value],
+            "commitment": Web3.to_hex(commitment),
+            "salt": Web3.to_hex(salt),
+            "status": "ALREADY_COMMITTED"
+        }
+
     result = TransactionManager(client).send(
-        voting.functions.commitVote(proposal_id, commitment)
+        voting.functions.commitVote(proposal_id, commitment),
+        idempotency_key=f"vote-commit:{proposal_id}:{client.address.lower()}"
     )
 
     return {
@@ -152,7 +233,8 @@ def reveal_vote(client, proposal_id, choice, salt):
         raise ValueError("Vote choice or salt does not match commitment")
 
     result = TransactionManager(client).send(
-        voting.functions.revealVote(proposal_id, choice_value, salt)
+        voting.functions.revealVote(proposal_id, choice_value, salt),
+        idempotency_key=f"vote-reveal:{proposal_id}:{client.address.lower()}"
     )
 
     return {
@@ -199,7 +281,8 @@ def finalize_voting(client, proposal_id):
         raise ValueError("Voting is already finalized")
 
     result = TransactionManager(client).send(
-        voting.functions.finalizeVoting(proposal_id)
+        voting.functions.finalizeVoting(proposal_id),
+        idempotency_key=f"voting-finalize:{proposal_id}"
     )
 
     return {
