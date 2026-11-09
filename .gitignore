@@ -22,3 +22,4 @@ chain/nodes/
 domains/*/keys/
 .venv/
 __pycache__/
+data/

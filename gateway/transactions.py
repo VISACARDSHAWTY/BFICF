@@ -43,9 +43,9 @@ class TransactionManager:
         self._initialize_database()
 
     def _connect(self):
-        connection = sqlite3.connect(DB_PATH, timeout=30)
-        connection.row_factory = sqlite3.Row
-        return connection
+        db = sqlite3.connect(DB_PATH, timeout=30)
+        db.row_factory = sqlite3.Row
+        return db
 
     def _initialize_database(self):
         with self._connect() as db:
@@ -60,20 +60,47 @@ class TransactionManager:
                     block_number INTEGER,
                     gas_used INTEGER,
                     created_at INTEGER NOT NULL,
+                    nonce INTEGER,
+                    chain_id INTEGER,
                     PRIMARY KEY (account, idempotency_key)
                 )
             """)
 
-    def _request_hash(self, contract_function):
-        contract_address = getattr(
-            contract_function, "address", ""
-        )
+            columns = {
+                row["name"]
+                for row in db.execute(
+                    "PRAGMA table_info(transactions)"
+                ).fetchall()
+            }
 
+            if "nonce" not in columns:
+                db.execute(
+                    "ALTER TABLE transactions ADD COLUMN nonce INTEGER"
+                )
+
+            if "chain_id" not in columns:
+                db.execute(
+                    "ALTER TABLE transactions ADD COLUMN chain_id INTEGER"
+                )
+
+            db.execute("""
+                CREATE UNIQUE INDEX IF NOT EXISTS
+                idx_transactions_account_chain_nonce
+                ON transactions(account, chain_id, nonce)
+                WHERE nonce IS NOT NULL
+            """)
+
+    def _request_hash(self, contract_function):
+        chain_id = self.w3.eth.chain_id
+        contract_address = getattr(contract_function, "address", "")
         calldata = contract_function._encode_transaction_data()
 
         payload = {
+            "chain_id": chain_id,
+            "sender": self.account.address.lower(),
             "contract": str(contract_address).lower(),
-            "calldata": calldata
+            "calldata": calldata,
+            "value": 0
         }
 
         encoded = json.dumps(
@@ -90,17 +117,18 @@ class TransactionManager:
         idempotency_key
     ):
         request_hash = self._request_hash(contract_function)
+        account = self.account.address.lower()
+        chain_id = self.w3.eth.chain_id
 
         with self._connect() as db:
+            # Serializes nonce reservation across gateway processes.
             db.execute("BEGIN IMMEDIATE")
 
-            existing = db.execute(
-                """
-                SELECT * FROM transactions
+            existing = db.execute("""
+                SELECT *
+                FROM transactions
                 WHERE account = ? AND idempotency_key = ?
-                """,
-                (self.account.address.lower(), idempotency_key)
-            ).fetchone()
+            """, (account, idempotency_key)).fetchone()
 
             if existing:
                 if existing["request_hash"] != request_hash:
@@ -111,15 +139,26 @@ class TransactionManager:
 
                 return dict(existing)
 
-            nonce = self.w3.eth.get_transaction_count(
+            pending_nonce = self.w3.eth.get_transaction_count(
                 self.account.address,
                 "pending"
             )
 
+            last_reserved = db.execute("""
+                SELECT MAX(nonce) AS last_nonce
+                FROM transactions
+                WHERE account = ? AND chain_id = ?
+            """, (account, chain_id)).fetchone()["last_nonce"]
+
+            nonce = pending_nonce
+
+            if last_reserved is not None:
+                nonce = max(nonce, last_reserved + 1)
+
             transaction = contract_function.build_transaction({
                 "from": self.account.address,
                 "nonce": nonce,
-                "chainId": self.w3.eth.chain_id,
+                "chainId": chain_id,
                 "gasPrice": 0,
                 "gas": 3000000
             })
@@ -128,8 +167,7 @@ class TransactionManager:
             tx_hash = signed.hash.hex()
             raw_transaction = signed.raw_transaction.hex()
 
-            db.execute(
-                """
+            db.execute("""
                 INSERT INTO transactions (
                     account,
                     idempotency_key,
@@ -137,26 +175,38 @@ class TransactionManager:
                     transaction_hash,
                     raw_transaction,
                     status,
-                    created_at
+                    created_at,
+                    nonce,
+                    chain_id
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    self.account.address.lower(),
-                    idempotency_key,
-                    request_hash,
-                    tx_hash,
-                    raw_transaction,
-                    "PREPARED",
-                    int(time.time())
-                )
-            )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                account,
+                idempotency_key,
+                request_hash,
+                tx_hash,
+                raw_transaction,
+                "PREPARED",
+                int(time.time()),
+                nonce,
+                chain_id
+            ))
 
             return {
                 "transaction_hash": tx_hash,
                 "raw_transaction": raw_transaction,
-                "status": "PREPARED"
+                "status": "PREPARED",
+                "nonce": nonce,
+                "chain_id": chain_id
             }
+
+    def _update_status(self, transaction_hash, status):
+        with self._connect() as db:
+            db.execute("""
+                UPDATE transactions
+                SET status = ?
+                WHERE transaction_hash = ?
+            """, (status, transaction_hash))
 
     def _broadcast(self, transaction):
         raw_transaction = bytes.fromhex(
@@ -170,26 +220,36 @@ class TransactionManager:
                 tx_hash = self.w3.eth.send_raw_transaction(
                     raw_transaction
                 )
+
+                self._update_status(expected_hash, "BROADCAST")
                 return tx_hash
 
             except Exception as exc:
                 message = str(exc).lower()
 
                 if "already known" in message:
+                    self._update_status(expected_hash, "BROADCAST")
                     return Web3.to_bytes(hexstr=expected_hash)
 
                 if "nonce too low" in message:
                     try:
-                        self.w3.eth.get_transaction_receipt(
+                        receipt = self.w3.eth.get_transaction_receipt(
                             expected_hash
                         )
-                        return Web3.to_bytes(hexstr=expected_hash)
+                        return receipt.transactionHash
+
                     except TransactionNotFound:
-                        raise RuntimeError(
-                            "Transaction nonce was already consumed, "
-                            "but its receipt was not found. "
-                            f"Hash: {expected_hash}"
-                        ) from exc
+                        try:
+                            self.w3.eth.get_transaction(expected_hash)
+                            self._update_status(expected_hash, "BROADCAST")
+                            return Web3.to_bytes(hexstr=expected_hash)
+
+                        except TransactionNotFound:
+                            raise RuntimeError(
+                                "The transaction nonce was consumed, "
+                                "but this transaction was not found. "
+                                f"Hash: {expected_hash}"
+                            ) from exc
 
                 if attempt == self.max_broadcast_attempts - 1:
                     raise RuntimeError(
@@ -205,26 +265,41 @@ class TransactionManager:
 
     def _wait_for_receipt(self, tx_hash):
         deadline = time.monotonic() + self.receipt_timeout
+        delay = self.poll_interval
+        last_error = None
 
         while time.monotonic() < deadline:
             try:
                 return self.w3.eth.get_transaction_receipt(tx_hash)
-            except TransactionNotFound:
-                time.sleep(self.poll_interval)
 
-        raise TimeoutError(
+            except TransactionNotFound:
+                time.sleep(delay)
+
+            except Exception as exc:
+                # Keep polling through temporary RPC/provider errors.
+                last_error = exc
+                time.sleep(delay)
+
+            delay = min(delay * 1.5, 10)
+
+        message = (
             "Transaction was broadcast but no receipt was found. "
-            f"Transaction hash: {tx_hash.hex()}"
+            f"Hash: {tx_hash.hex()}"
         )
 
-    def send(self, contract_function, idempotency_key=None):
-        if idempotency_key is None:
-            raise ValueError(
-                "An idempotency_key is required for transaction submission."
-            )
+        if last_error:
+            message += f" Last RPC error: {last_error}"
 
-        if not isinstance(idempotency_key, str) or not idempotency_key.strip():
-            raise ValueError("idempotency_key must be a non-empty string.")
+        raise TimeoutError(message)
+
+    def send(self, contract_function, idempotency_key=None):
+        if (
+            not isinstance(idempotency_key, str)
+            or not idempotency_key.strip()
+        ):
+            raise ValueError(
+                "A non-empty idempotency_key is required."
+            )
 
         with self._nonce_lock:
             transaction = self._load_or_create_transaction(
@@ -240,30 +315,40 @@ class TransactionManager:
                     "status": "SUCCESS"
                 }
 
+            if transaction["status"] == "REVERTED":
+                raise RuntimeError(
+                    "This transaction previously reverted. "
+                    f"Hash: {transaction['transaction_hash']}"
+                )
+
             tx_hash = self._broadcast(transaction)
             receipt = self._wait_for_receipt(tx_hash)
 
             if receipt.status != 1:
+                self._update_status(
+                    transaction["transaction_hash"],
+                    "REVERTED"
+                )
+
                 raise RuntimeError(
                     f"Transaction reverted. Hash: {tx_hash.hex()}, "
                     f"block: {receipt.blockNumber}"
                 )
 
             with self._connect() as db:
-                db.execute(
-                    """
+                db.execute("""
                     UPDATE transactions
-                    SET status = ?, block_number = ?, gas_used = ?
+                    SET status = ?,
+                        block_number = ?,
+                        gas_used = ?
                     WHERE account = ? AND idempotency_key = ?
-                    """,
-                    (
-                        "SUCCESS",
-                        receipt.blockNumber,
-                        receipt.gasUsed,
-                        self.account.address.lower(),
-                        idempotency_key
-                    )
-                )
+                """, (
+                    "SUCCESS",
+                    receipt.blockNumber,
+                    receipt.gasUsed,
+                    self.account.address.lower(),
+                    idempotency_key
+                ))
 
             return {
                 "transaction_hash": tx_hash.hex(),
