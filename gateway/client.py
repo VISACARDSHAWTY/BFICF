@@ -6,7 +6,7 @@ from web3 import Web3
 from eth_account import Account
 
 from gateway.config import CHAIN_ID, DOMAINS, ROOT
-
+from web3.middleware import ExtraDataToPOAMiddleware
 
 DEPLOYMENT_FILE = (
     ROOT / "contracts" / "deployments" / "besu.json"
@@ -28,6 +28,10 @@ class BlockchainClient:
 
         self.w3 = Web3(
             Web3.HTTPProvider(self.config["rpc"])
+        )
+        self.w3.middleware_onion.inject(
+            ExtraDataToPOAMiddleware,
+            layer=0
         )
 
         if not self.w3.is_connected():
