@@ -69,18 +69,12 @@ def submit_correlation(
 
 def attest_correlation(client, incident_id, result_hash):
     incident_id_hash = Web3.keccak(text=incident_id)
-
-    result_hash_bytes = bytes.fromhex(
-        result_hash.removeprefix("0x")
-    )
-
+    result_hash_bytes = bytes.fromhex(result_hash.removeprefix("0x"))
     contract = client.get_contract("CorrelationDecision")
-
     transaction = contract.functions.attestCorrelation(
         incident_id_hash,
         result_hash_bytes
     )
-
     return TransactionManager(client).send(
         transaction,
         idempotency_key=f"correlation-attest:{incident_id}:{result_hash_bytes.hex()}"

@@ -290,3 +290,32 @@ def finalize_voting(client, proposal_id):
         "status": "FINALIZED",
         **result
     }
+    
+def reveal_vote_from_store(client, proposal_id, choice):
+    choice_value = _normalize_choice(choice)
+
+    db_path = Path(__file__).resolve().parent.parent / "data" / "vote_salts.sqlite3"
+    chain_id = client.w3.eth.chain_id
+    voter = client.address.lower()
+
+    with sqlite3.connect(db_path, timeout=30) as db:
+        row = db.execute("""
+            SELECT choice, salt
+            FROM vote_salts
+            WHERE chain_id = ? AND proposal_id = ? AND voter = ?
+        """, (chain_id, proposal_id, voter)).fetchone()
+
+    if row is None:
+        raise ValueError("No locally stored vote salt exists for this proposal and account")
+
+    stored_choice, stored_salt = row
+
+    if stored_choice != choice_value:
+        raise ValueError("Requested choice does not match the stored vote")
+
+    return reveal_vote(
+        client=client,
+        proposal_id=proposal_id,
+        choice=choice_value,
+        salt=bytes(stored_salt)
+    )

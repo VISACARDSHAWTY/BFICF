@@ -62,3 +62,33 @@ def register_incident(
         "vector_commitment": vector_commitment.hex(),
         **result
     }
+    
+
+
+def get_incident(client, incident_id):
+    if not incident_id:
+        raise ValueError("Incident ID cannot be empty")
+
+    incident_id_hash = Web3.keccak(text=incident_id)
+
+    contract = client.get_contract("IncidentRegistry")
+
+    result = contract.functions.incidents(
+        incident_id_hash
+    ).call()
+
+    state = contract.functions.stateOf(
+        incident_id_hash
+    ).call()
+
+    return {
+        "incident_id": incident_id,
+        "vector_commitment": Web3.to_hex(result[0]),
+        "incident_type": result[1],
+        "severity": result[2],
+        "detected_at": result[3],
+        "registered_at": result[4],
+        "state": state,
+        "registered_by": result[6],
+        "closure_hash": Web3.to_hex(result[7])
+    }
