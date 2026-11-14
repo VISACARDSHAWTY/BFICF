@@ -35,6 +35,18 @@ def initialize_store():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS execution_actions (
+                action_id INTEGER PRIMARY KEY,
+                domain TEXT NOT NULL,
+                resource_id TEXT NOT NULL,
+                action TEXT NOT NULL,
+                status TEXT NOT NULL,
+                receipt TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
 
 
 def save_incident(data: dict):
@@ -86,5 +98,49 @@ def get_incident(incident_id: str):
     result["incident_vector"] = json.loads(
         result["incident_vector"]
     )
+
+    return result
+
+def save_execution_action(
+    action_id: int,
+    domain: str,
+    resource_id: str,
+    action: str,
+    status: str,
+    receipt: dict | None = None
+):
+    with get_connection() as connection:
+        connection.execute("""
+            INSERT INTO execution_actions (
+                action_id, domain, resource_id, action, status, receipt
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(action_id) DO UPDATE SET
+                status = excluded.status,
+                receipt = excluded.receipt,
+                updated_at = CURRENT_TIMESTAMP
+        """, (
+            action_id,
+            domain.upper(),
+            resource_id,
+            action.upper(),
+            status.upper(),
+            json.dumps(receipt, sort_keys=True) if receipt is not None else None
+        ))
+
+
+def get_execution_action_record(action_id: int):
+    with get_connection() as connection:
+        row = connection.execute(
+            "SELECT * FROM execution_actions WHERE action_id = ?",
+            (action_id,)
+        ).fetchone()
+
+    if row is None:
+        return None
+
+    result = dict(row)
+    if result["receipt"]:
+        result["receipt"] = json.loads(result["receipt"])
 
     return result
