@@ -8,7 +8,7 @@ from collections.abc import Mapping
 from dic.models import IncidentRequest
 from dic.processor import process_incident
 from dic.store import initialize_store, get_incident
-from dic.executor import execute_edge_action
+from dic.executor import execute_edge_action, execute_cloud_action
 
 from gateway.incidents import get_incident as get_blockchain_incident
 from gateway.voting import commit_vote, reveal_vote, get_voting_session, finalize_voting, reveal_vote_from_store
@@ -418,11 +418,16 @@ def retrieve_recovery_request(request_id: int, domain: str = "OEM"):
 @app.post("/execution/action/{action_id}/execute")
 def execute_action(action_id: int, domain: str = "EDGE"):
     try:
-        if domain.upper() != "EDGE":
-            raise ValueError("Local executor is only available for EDGE")
+        domain = domain.upper()
 
-        receipt = execute_edge_action(action_id)
-        client = BlockchainClient("EDGE")
+        if domain == "EDGE":
+            receipt = execute_edge_action(action_id)
+        elif domain == "CLOUD":
+            receipt = execute_cloud_action(action_id)
+        else:
+            raise ValueError("No local executor available for this domain")
+
+        client = BlockchainClient(domain)
         return report_execution(client, action_id, receipt)
 
     except ValueError as exc:

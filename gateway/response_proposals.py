@@ -91,7 +91,7 @@ def create_response_proposal(
     result = TransactionManager(client).send(
         transaction,
         idempotency_key=(
-            f"proposal-create:{incident_id}:"
+            f"proposal-create:{proposal_id}:{incident_id}:"
             f"{target_domain}:{target_resource_hash.hex()}:"
             f"{details_hash.hex()}"
         )
