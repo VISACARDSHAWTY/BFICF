@@ -92,3 +92,34 @@ def get_incident(client, incident_id):
         "registered_by": result[6],
         "closure_hash": Web3.to_hex(result[7])
     }
+
+def close_incident(client, incident_id, closure_record):
+    if not incident_id:
+        raise ValueError("Incident ID cannot be empty")
+
+    if not isinstance(closure_record, dict) or not closure_record:
+        raise ValueError("Closure record must be a non-empty dictionary")
+
+    incident_id_hash = Web3.keccak(text=incident_id)
+
+    closure_hash = bytes.fromhex(
+        generate_commitment(closure_record).removeprefix("0x")
+    )
+
+    contract = client.get_contract("IncidentRegistry")
+
+    transaction = contract.functions.closeIncident(
+        incident_id_hash,
+        closure_hash
+    )
+
+    result = TransactionManager(client).send(
+        transaction,
+        idempotency_key=f"incident-close:{incident_id}"
+    )
+
+    return {
+        "incident_id": incident_id,
+        "closure_hash": Web3.to_hex(closure_hash),
+        **result
+    }
