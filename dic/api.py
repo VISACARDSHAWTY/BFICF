@@ -8,7 +8,7 @@ from collections.abc import Mapping
 from dic.models import IncidentRequest
 from dic.processor import process_incident
 from dic.store import initialize_store, get_incident
-from dic.executor import execute_edge_action, execute_cloud_action, execute_oem_action
+from dic.executor import execute_edge_action, execute_cloud_action, execute_oem_action, execute_user_action
 
 from gateway.incidents import get_incident as get_blockchain_incident
 from gateway.voting import commit_vote, reveal_vote, get_voting_session, finalize_voting, reveal_vote_from_store
@@ -426,6 +426,8 @@ def execute_action(action_id: int, domain: str = "EDGE"):
             receipt = execute_cloud_action(action_id)
         elif domain == "OEM":
             receipt = execute_oem_action(action_id)
+        elif domain == "USER":
+            receipt = execute_user_action(action_id)
         else:
             raise ValueError("No local executor available for this domain")
 
@@ -436,4 +438,3 @@ def execute_action(action_id: int, domain: str = "EDGE"):
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
-

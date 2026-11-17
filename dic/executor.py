@@ -179,3 +179,60 @@ def execute_oem_action(action_id: int) -> dict:
     )
 
     return receipt
+
+def execute_user_action(action_id: int) -> dict:
+    client = BlockchainClient("USER")
+    action_data = get_execution_action(client, action_id)
+
+    if action_data["status"] not in ("PENDING", "FAILED"):
+        raise ValueError("Action is not awaiting execution")
+
+    if action_data["action"] != "MONITOR":
+        raise ValueError("Unsupported USER action")
+
+    resource_id = "USER-ADMIN-001"
+    expected_hash = Web3.keccak(text=resource_id).hex()
+
+    if (
+        action_data["target_resource_hash"].lower().removeprefix("0x")
+        != expected_hash.lower().removeprefix("0x")
+    ):
+        raise ValueError("Unknown USER administrator resource hash")
+
+    existing = get_execution_action_record(action_id)
+
+    if existing and existing["status"] == "EXECUTED":
+        if existing["receipt"]:
+            return existing["receipt"]
+        raise ValueError("Execution is already recorded but has no receipt")
+
+    timestamp = int(time.time())
+
+    receipt = {
+        "action_id": action_id,
+        "domain": "USER",
+        "resource_id": resource_id,
+        "action": "MONITOR",
+        "status": "EXECUTED",
+        "execution_mode": "SIMULATED",
+        "timestamp": timestamp,
+        "proof": {
+            "description": "Simulated notification to the system administrator"
+        },
+    }
+
+    receipt_json = json.dumps(receipt, sort_keys=True)
+    receipt["proof"]["sha256"] = hashlib.sha256(
+        receipt_json.encode("utf-8")
+    ).hexdigest()
+
+    save_execution_action(
+        action_id=action_id,
+        domain="USER",
+        resource_id=resource_id,
+        action="MONITOR",
+        status="EXECUTED",
+        receipt=receipt,
+    )
+
+    return receipt
