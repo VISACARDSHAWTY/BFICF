@@ -7,21 +7,24 @@ def canonical_json(data):
         data,
         sort_keys=True,
         separators=(",", ":"),
-        ensure_ascii=False
+        ensure_ascii=False,
+        allow_nan=False,
     ).encode("utf-8")
 
 
-def generate_commitment(data):
-    encoded = canonical_json(data)
-    return Web3.keccak(encoded).hex()
+def commitment_bytes(data, domain=None, salt=None):
+    payload = canonical_json(data)
+    if domain is not None:
+        payload = domain.encode("utf-8") + b"\x00" + payload
+    if salt is not None:
+        payload = payload + b"\x00" + bytes(salt)
+    return bytes(Web3.keccak(payload))
+
+
+def generate_commitment(data, domain=None, salt=None):
+    return Web3.to_hex(commitment_bytes(data, domain, salt))
 
 
 if __name__ == "__main__":
-    incident = {
-        "incident_id": "INC-001",
-        "domain": "EDGE",
-        "type": "CYBER",
-        "severity": 3
-    }
-
+    incident = {"incident_id": "INC-001", "domain": "EDGE", "type": "CYBER", "severity": 3}
     print("Incident commitment:", generate_commitment(incident))
