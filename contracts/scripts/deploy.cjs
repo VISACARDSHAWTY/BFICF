@@ -22,9 +22,9 @@ const artifact = n => JSON.parse(fs.readFileSync(path.join(root, 'build', n + '.
     addr[role] = await signers[role].getAddress();
     console.log(`  ${role.padEnd(17)} ${addr[role]}  ${key ? '(key from ' + r.keyEnv + ')' : '(local node account)'}`);
   }
-  const sa = signers.secauth; // deployer == Security Authority
+  const sa = new ethers.NonceManager(signers.secauth);
 
-  const overrides = cfg.gasPrice !== undefined ? { gasPrice: BigInt(cfg.gasPrice) } : {};
+  const overrides = {};
   const gas = {}; let totalGas = 0n;
   const track = (label, receipt) => { gas[label] = receipt.gasUsed.toString(); totalGas += receipt.gasUsed; };
 

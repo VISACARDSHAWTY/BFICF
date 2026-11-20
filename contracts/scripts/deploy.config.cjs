@@ -1,9 +1,8 @@
 const env = process.env;
 
 module.exports = {
-  network: "besu",
-  rpcUrl: env.RPC_URL || "http://127.0.0.1:8549",
-  gasPrice: "0",
+  network: "gwtest",
+  rpcUrl: env.RPC_URL || "http://127.0.0.1:8547",
 
   roles: {
     secauth: { keyEnv: "SECAUTH_KEY", localIndex: 0 },
@@ -11,8 +10,8 @@ module.exports = {
     cloud: { keyEnv: "CLOUD_KEY", localIndex: 2 },
     edge: { keyEnv: "EDGE_KEY", localIndex: 3 },
     user: { keyEnv: "USER_KEY", localIndex: 4 },
-    correlator: { keyEnv: "SECAUTH_KEY", localIndex: 0 },
-    recoveryVerifier: { keyEnv: "SECAUTH_KEY", localIndex: 0 }
+    correlator: { keyEnv: "CORRELATOR_KEY", localIndex: 0 },
+    recoveryVerifier: { keyEnv: "RECOVERY_VERIFIER_KEY", localIndex: 0 }
   },
 
   domains: [

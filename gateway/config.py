@@ -22,7 +22,7 @@ DEPLOYMENT_FILE = DEPLOYMENT_DIR / f"{NETWORK}.json"
 ABI_DIR = DEPLOYMENT_DIR / "abi"
 
 
-GAS_PRICE = int(os.getenv("GAS_PRICE", "0"))               
+GAS_PRICE = int(os.getenv("GAS_PRICE", "0"))              
 GAS_MARGIN = float(os.getenv("GAS_MARGIN", "1.25"))        
 GAS_FALLBACK = int(os.getenv("GAS_FALLBACK", "3000000"))   
 GAS_LIMIT_CAP = int(os.getenv("GAS_LIMIT_CAP", "8000000"))  
